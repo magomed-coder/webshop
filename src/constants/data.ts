@@ -6,7 +6,7 @@ import furniture_1_sofa from "assets/images/furniture_1_sofa.png";
 // import perfume_2 from "assets/images/perfume_2.png";
 import perfume_2 from "assets/images/perfume_2.png";
 
-import sports_nutrition from "@/assets/images/sports_nutrition.png";
+import sports_nutrition from "assets/images/sports_nutrition.png";
 import { CategoryName, type Category, type Product } from "../types";
 
 export const images = {

@@ -1,10 +1,12 @@
+import { Title } from "@components/UI/Title/Title";
 import styles from "./about.module.css";
+import { Container } from "@components/Container/Container";
 
 const AboutUs = () => {
   return (
-    <div className={styles.container}>
+    <Container>
       <section className={styles.section}>
-        <h1 className={styles.header}>О нас</h1>
+        <Title title="О нас" />
         <p className={styles.paragraph}>
           Добро пожаловать в <span className={styles.brand}>Share&Earn</span>!
           Мы создали эту платформу, чтобы предоставить вам уникальную
@@ -73,7 +75,7 @@ const AboutUs = () => {
           социальных сетях.
         </p>
       </section>
-    </div>
+    </Container>
   );
 };
 

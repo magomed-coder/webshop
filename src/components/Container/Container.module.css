@@ -1,6 +1,4 @@
 .container {
   max-width: 1200px;
   margin: 0 auto; /* центрируем */
-  padding-left: 16px; /* отступ слева */
-  padding-right: 16px; /* отступ справа */
 }

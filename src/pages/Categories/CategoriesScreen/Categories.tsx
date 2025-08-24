@@ -1,24 +1,25 @@
 import { OfferCard } from "../OfferCard/OfferCard";
-import { Paragraph } from "@components/UI/Paragraph/Paragraph";
 
 import styles from "./Categories.module.css";
 import { CATEGORIES } from "constants/data";
+import { Container } from "@components/Container/Container";
+import { Title } from "@components/UI/Title/Title";
 
 const Categories = () => {
   return (
-    <div className={styles.categoryPage}>
-      <div className={styles.categoryHeader}>
-        <Paragraph>Категории</Paragraph>
-      </div>
+    <Container>
+      <div className={styles.categoryPage}>
+        <Title title="Категории" />
 
-      <div className={styles.categoryContainer}>
-        <div className={styles.categoriesGrid}>
-          {CATEGORIES.map((item, index) => (
-            <OfferCard key={item.id} item={item} index={index} />
-          ))}
+        <div>
+          <div className={styles.categoriesGrid}>
+            {CATEGORIES.map((item) => (
+              <OfferCard key={item.id} item={item} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

@@ -1,12 +1,20 @@
-.categoryPage {
-  background-color: #fff;
+/* src/pages/MainScreen.module.css */
+
+.content {
+}
+
+.categoriesTitle {
 }
 
 .categoriesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   padding-bottom: 24px;
+}
+
+.footerComponent {
+  margin: 40px 0 35px;
 }
 
 /* Адаптивная сетка */
@@ -23,19 +31,7 @@
 }
 
 @media (max-width: 600px) {
-  .categoryContainer {
-  }
   .categoriesGrid {
     gap: 6px;
-  }
-}
-
-/* Эффекты для темной темы */
-@media (prefers-color-scheme: dark) {
-  .categoryPage {
-  }
-
-  .categoryHeader {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 }

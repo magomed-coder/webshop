@@ -4,6 +4,7 @@ export type ThemedTextProps = {
   children: React.ReactNode;
   variant?: string; // "u500.18" / "r400.16"
   style?: CSSProperties;
+  className?: string; // ✅ добавляем
 };
 
 type FontFamilyCode = "r" | "u";
@@ -33,7 +34,6 @@ function parseVariant(variant: string): CSSProperties | undefined {
 
   return {
     fontSize,
-    lineHeight: Math.round(fontSize * 1.5),
     fontFamily,
     fontWeight: weight,
   };
@@ -43,10 +43,13 @@ export function Paragraph({
   children,
   variant = "u500.18",
   style,
+  className,
 }: ThemedTextProps) {
   const variantStyle = parseVariant(variant);
 
   return (
-    <span style={{ color: "#000", ...variantStyle, ...style }}>{children}</span>
+    <span style={{ ...variantStyle, ...style }} className={className}>
+      {children}
+    </span>
   );
 }

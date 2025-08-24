@@ -8,14 +8,13 @@ import type { Category } from "types";
 
 interface OfferCardProps {
   item: Category;
-  index: number;
 }
 
 export const OfferCard: React.FC<OfferCardProps> = ({ item }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/products?category=${encodeURIComponent(item.name)}`);
+    navigate(`/products/${encodeURIComponent(item.name)}`);
   };
 
   return (
@@ -28,7 +27,9 @@ export const OfferCard: React.FC<OfferCardProps> = ({ item }) => {
         <img src={item.image} alt={item.title} className={styles.image} />
       </div>
       <div className={styles.infoContainer}>
-        <Paragraph variant="u500.12">{item.title}</Paragraph>
+        <Paragraph variant="u500.12" className={styles.title}>
+          {item.title}
+        </Paragraph>
       </div>
     </div>
   );

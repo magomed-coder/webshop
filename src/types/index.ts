@@ -56,3 +56,11 @@ export type FilterType = {
     | "referral_asc";
   withExtraBonus: boolean;
 };
+export interface ReferralStats {
+  productId: number;
+  productName: string;
+  clicks: number;
+  transactions: number;
+  totalEarnings: number;
+  images: string[];
+}

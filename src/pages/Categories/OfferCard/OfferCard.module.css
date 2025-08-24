@@ -1,6 +1,6 @@
 .offerCard {
   height: 180px;
-  border-radius: 12px;
+  border-radius: 6px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -11,12 +11,7 @@
 }
 
 .offerCard:hover {
-  transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-.offerCard:active {
-  transform: translateY(-2px);
 }
 
 .imageContainer {
@@ -43,16 +38,20 @@
 }
 
 .infoContainer {
-  padding: 24px;
+  padding: 0 24px;
   width: 60%;
   z-index: 2;
+
+  position: absolute;
+
+  left: 0px;
+  top: 40%;
+  transform: translateY(-50%);
 }
 
 .title {
   color: white;
-  white-space: pre-line;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  line-height: 1.4;
+  /* white-space: pre-line; */
 }
 
 /* Адаптивность карточки */
@@ -64,10 +63,10 @@
 
 @media (max-width: 600px) {
   .offerCard {
-    height: 140px;
+    height: 100px;
   }
 
   .infoContainer {
-    padding: 16px;
+    padding: 0 10px;
   }
 }

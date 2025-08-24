@@ -1,0 +1,79 @@
+/* src/components/categories/ShowMoreCard.module.css */
+.cardContainer {
+  height: 180px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  display: flex;
+  align-items: center;
+}
+
+.cardContainer:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.moreButton {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #28303e;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.moreButton:hover {
+  background-color: #3a4456;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.moreButtonCircle {
+  padding-right: 20px;
+}
+
+.arrowIcon {
+  font-size: 40px;
+  color: white;
+  font-weight: 300;
+}
+
+.infoContainer {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 1;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.title {
+  color: white;
+}
+
+/* Адаптивность карточки */
+@media (max-width: 900px) {
+  .cardContainer {
+    height: 160px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cardContainer {
+    height: 100px;
+  }
+
+  .infoContainer {
+    left: 15px;
+  }
+
+  .arrowIcon {
+    font-size: 32px;
+  }
+}

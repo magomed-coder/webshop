@@ -8,11 +8,11 @@
 }
 
 .desktop-content {
-  padding: 1rem;
+  padding: 0 32px;
 }
 
 .mobile-content {
-  padding-bottom: 1rem;
+  padding: 0 16px;
 }
 
 /* Стили для мобильного таббара */
