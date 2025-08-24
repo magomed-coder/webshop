@@ -1,0 +1,73 @@
+.offerCard {
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  display: flex;
+  align-items: center;
+}
+
+.offerCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.offerCard:active {
+  transform: translateY(-2px);
+}
+
+.imageContainer {
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  width: 50%;
+  height: 90%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.image {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.offerCard:hover .image {
+  transform: scale(1.05);
+}
+
+.infoContainer {
+  padding: 24px;
+  width: 60%;
+  z-index: 2;
+}
+
+.title {
+  color: white;
+  white-space: pre-line;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1.4;
+}
+
+/* Адаптивность карточки */
+@media (max-width: 900px) {
+  .offerCard {
+    height: 160px;
+  }
+}
+
+@media (max-width: 600px) {
+  .offerCard {
+    height: 140px;
+  }
+
+  .infoContainer {
+    padding: 16px;
+  }
+}

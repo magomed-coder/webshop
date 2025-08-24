@@ -1,0 +1,30 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(69, 74, 63, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: fadeIn 0.15s ease forwards;
+}
+
+.fadeOut {
+  animation: fadeOut 0.15s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    background: rgba(69, 74, 63, 0);
+  }
+  to {
+    background: rgba(69, 74, 63, 0.5);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    background: rgba(69, 74, 63, 0.5);
+  }
+  to {
+    background: rgba(69, 74, 63, 0);
+  }
+}

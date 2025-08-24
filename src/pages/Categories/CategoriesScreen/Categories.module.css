@@ -1,0 +1,61 @@
+.categoryPage {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.categoryHeader {
+  background-color: #fff;
+  padding: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+.categoryContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding-bottom: 40px;
+}
+
+/* Адаптивная сетка */
+@media (max-width: 1200px) {
+  .categoriesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .categoriesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .categoriesGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .categoryContainer {
+    padding: 0 16px;
+  }
+}
+
+/* Эффекты для темной темы */
+@media (prefers-color-scheme: dark) {
+  .categoryPage {
+    background-color: #121212;
+  }
+
+  .categoryHeader {
+    background-color: #1e1e1e;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}

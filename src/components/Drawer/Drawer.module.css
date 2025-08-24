@@ -1,0 +1,36 @@
+.drawer {
+  width: 100%;
+  max-width: 476px;
+  height: 100vh;
+  background: white;
+  animation: slideIn 0.25s ease-out forwards;
+
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  top: 0;
+
+  overflow-y: scroll;
+}
+
+.closing {
+  animation: slideOut 0.25s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
