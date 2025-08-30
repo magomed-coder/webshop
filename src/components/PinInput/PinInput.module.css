@@ -1,0 +1,45 @@
+.pin_input_container {
+  padding: 10px;
+  display: flex;
+  gap: 3px;
+  justifycontent: center;
+}
+
+.pin_input {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 24px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+
+  border-сolor: var(--main-color-border-icon);
+  border: none;
+  border-radius: 5px;
+  width: 32px;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 27.5px;
+  background-color: var(--main-color-bg-illustration);
+}
+
+.pin_input:focus {
+  outline: none;
+}
+
+/* Ошибка */
+.error {
+  background-color: var(--error-color-notification);
+  color: var(--error-color-icon);
+}
+
+/* Заблокировано */
+.disabled {
+  background-color: var(--disabled-bg);
+  cursor: not-allowed;
+}
+
+/* Фокус */
+.focused {
+  outline: 2px solid var(--main-color-primary); /* пример */
+}
