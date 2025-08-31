@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styles from "./MainScreen.module.css";
-import { Container } from "@components/Container/Container";
+import { Container } from "@components/UI/Container/Container";
 import { Title } from "@components/UI/Title/Title";
 import { OfferCard } from "../Categories/OfferCard/OfferCard";
 import { CATEGORIES } from "constants/data";

@@ -1,6 +1,6 @@
 import { Title } from "@components/UI/Title/Title";
 import styles from "./about.module.css";
-import { Container } from "@components/Container/Container";
+import { Container } from "@components/UI/Container/Container";
 
 const AboutUs = () => {
   return (

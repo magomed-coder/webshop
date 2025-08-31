@@ -13,7 +13,7 @@ import { fetchProductsByCategory } from "services/productService";
 import { LOCATIONS } from "constants/main";
 import type { CategoryName, FilterType, Product } from "types";
 import { ProductsHeader } from "../ProductsHeader/ProductsHeader";
-import { Container } from "@components/Container/Container";
+import { Container } from "@components/UI/Container/Container";
 
 const ProductListScreen: React.FC = () => {
   const { categoryName } = useParams<{
@@ -94,7 +94,7 @@ const ProductListScreen: React.FC = () => {
 
   const openProduct = useCallback(
     (id: number) => {
-      navigate(`/products/${id}`);
+      navigate(`/products/${categoryName}/${id}`);
     },
     [navigate]
   );

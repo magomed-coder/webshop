@@ -1,0 +1,110 @@
+/* ImageSwiper.module.css */
+.productImage {
+  width: 100%;
+  background-color: white;
+  margin-bottom: 8px;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  position: relative;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.slider.left {
+  transition: transform 0.3s ease-out;
+}
+
+.slider.right {
+  transition: transform 0.3s ease-out;
+}
+
+.slide {
+  flex: 0 0 100%;
+  height: 100%;
+}
+
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imagePagination {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+.paginationDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease;
+}
+
+.activeDot {
+  background-color: #fff;
+}
+
+.navButtonPrev,
+.navButtonNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background-color 0.2s ease;
+}
+
+.navButtonPrev:hover,
+.navButtonNext:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.navButtonPrev {
+  left: 12px;
+}
+
+.navButtonNext {
+  right: 12px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .navButtonPrev,
+  .navButtonNext {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,224 @@
+/* ProductDetailScreen.module.css */
+.productDetailContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  /* padding: 20px; */
+  background-color: #fff;
+  position: relative;
+  padding-bottom: 40px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-size: 18px;
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contentWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .contentWrapper {
+    grid-template-columns: 1fr;
+    margin-top: 0px;
+  }
+}
+
+.productContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+}
+
+.productInfoSection {
+  margin-bottom: 16px;
+}
+
+.productName {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.pricingContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.priceBlock,
+.bonusBlock,
+.extraBonusBlock {
+  flex: 1;
+  min-width: 120px;
+}
+
+.priceHeader,
+.bonusHeader,
+.extraBonusHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.priceLabel,
+.bonusLabel,
+.extraBonusLabel {
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 4px;
+  color: #6b7280;
+}
+
+.priceValue,
+.bonusValue,
+.extraBonusValue {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.descriptionSection,
+.productDetailsSection {
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sectionTitleText {
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.productDescription {
+  color: #4b5563;
+  line-height: 22px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.detailsContainer {
+  width: 100%;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+}
+
+.detailLabelText {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.detailValueText {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.detailDivider {
+  height: 1px;
+  background-color: #f3f4f6;
+  margin: 4px 0;
+}
+
+.stockBadge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.inStockBadge {
+  background-color: #def7ec;
+}
+
+.outOfStockBadge {
+  background-color: #fde8e8;
+}
+
+.inStockText {
+  color: #0e9f6e;
+}
+
+.outOfStockText {
+  color: #f05252;
+}
+
+.shareActionButton {
+  display: flex;
+  flex-direction: row;
+  background-color: #192028;
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 24px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+@media (max-width: 768px) {
+  .shareActionButton {
+    width: calc(100% - 40px);
+    margin: 0 20px;
+  }
+}
+
+.shareActionButton:hover {
+  background-color: #2a3845;
+}
+
+.shareActionLabel {
+  margin-left: 12px;
+}
