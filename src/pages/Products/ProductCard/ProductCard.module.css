@@ -82,7 +82,7 @@
   height: 16px;
   background-color: #e1e1e1;
   border-radius: 4px;
-  margin: 8px;
+  margin: 3px 8px;
 }
 
 .skeletonPrice {
@@ -90,7 +90,7 @@
   height: 16px;
   background-color: #e1e1e1;
   border-radius: 4px;
-  margin: 4px 8px;
+  margin: 4px 0px;
 }
 
 .skeletonPrice:last-child {

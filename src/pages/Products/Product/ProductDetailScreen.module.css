@@ -77,6 +77,12 @@
   flex-wrap: wrap;
 }
 
+@media (max-width: 450px) {
+  .pricingContainer {
+    row-gap: 10px;
+  }
+}
+
 .priceBlock,
 .bonusBlock,
 .extraBonusBlock {

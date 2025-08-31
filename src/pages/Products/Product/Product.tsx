@@ -1,6 +1,6 @@
 // ProductDetailScreen.tsx
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./ProductDetailScreen.module.css";
 
 // Импортируем иконки для веб (используем react-icons)
@@ -10,7 +10,6 @@ import {
   IoGiftOutline,
   IoDocumentTextOutline,
   IoInformationCircleOutline,
-  IoChevronBack,
 } from "react-icons/io5";
 import { MdStars, MdCategory, MdInventory } from "react-icons/md";
 import type { Product } from "types";
@@ -18,22 +17,13 @@ import { mockProducts } from "constants/data";
 import { getCategoryTitle } from "lib/utils/category.utils";
 import { formatPrice } from "lib/utils/formatters";
 import ImageSwiper from "@components/ImageSwiper/ImageSwiper";
-
-// Компонент кнопки "Назад"
-const BackButton = () => {
-  const navigate = useNavigate();
-
-  return (
-    <button className={styles.backButton} onClick={() => navigate(-1)}>
-      <IoChevronBack size={24} />
-    </button>
-  );
-};
+import { useIsMobile } from "hooks/useIsMobile";
+import BackButton from "@components/UI/BackButton/BackButton";
 
 const ProductDetailScreen = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
-
+  const isMobile = useIsMobile();
   useEffect(() => {
     // Находим продукт по ID
     const allProducts = Object.values(mockProducts).flat();
@@ -74,7 +64,7 @@ const ProductDetailScreen = () => {
       <BackButton />
 
       <div className={styles.contentWrapper}>
-        <ImageSwiper images={product.images} />
+        <ImageSwiper data={product.images} showArrows={!isMobile} />
 
         <div className={styles.productContent}>
           <div className={styles.productInfoSection}>

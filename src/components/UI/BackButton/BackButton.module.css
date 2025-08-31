@@ -1,0 +1,24 @@
+.backButton {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  opacity: 0.5;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+
+  /* тень для веб */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.backButton:hover {
+  opacity: 0.8;
+}

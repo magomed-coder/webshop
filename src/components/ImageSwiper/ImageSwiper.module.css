@@ -1,48 +1,87 @@
 /* ImageSwiper.module.css */
-.productImage {
+.container {
+  position: relative;
   width: 100%;
-  background-color: white;
-  margin-bottom: 8px;
   aspect-ratio: 1/1;
   overflow: hidden;
-  position: relative;
 }
 
-.imageContainer {
+.scrollContainer {
   width: 100%;
   height: 100%;
-  position: relative;
-  overflow: hidden;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* Hide scrollbar IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .slider {
   display: flex;
+  width: 100%;
   height: 100%;
-  transition: transform 0.3s ease;
-}
-
-.slider.left {
-  transition: transform 0.3s ease-out;
-}
-
-.slider.right {
-  transition: transform 0.3s ease-out;
 }
 
 .slide {
   flex: 0 0 100%;
-  height: 100%;
+  scroll-snap-align: center;
+  position: relative;
 }
 
-.mainImage {
+.image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* border-radius: 8px; */
+  display: block;
 }
 
-.imagePagination {
+/* Навигационные кнопки */
+.navButton {
   position: absolute;
-  bottom: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+.navButton:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.prevButton {
+  left: 10px;
+}
+
+.nextButton {
+  right: 10px;
+}
+
+/* Индикаторы (точки) */
+.dotsContainer {
+  position: absolute;
+  bottom: 15px;
   left: 0;
   right: 0;
   display: flex;
@@ -51,60 +90,41 @@
   z-index: 10;
 }
 
-.paginationDot {
+.dot {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: 1000px;
   border: none;
   background-color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   padding: 0;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  /* transform: scale(1.2); */
 }
 
 .activeDot {
-  background-color: #fff;
-}
-
-.navButtonPrev,
-.navButtonNext {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: rgba(0, 0, 0, 0.3);
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: background-color 0.2s ease;
-}
-
-.navButtonPrev:hover,
-.navButtonNext:hover {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.navButtonPrev {
-  left: 12px;
-}
-
-.navButtonNext {
-  right: 12px;
+  background-color: white;
+  /* transform: scale(1.2); */
+  width: 16px;
 }
 
 /* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
-  .navButtonPrev,
-  .navButtonNext {
+  .navButton {
     width: 36px;
     height: 36px;
     font-size: 18px;
+  }
+
+  .prevButton {
+    left: 5px;
+  }
+
+  .nextButton {
+    right: 5px;
   }
 }

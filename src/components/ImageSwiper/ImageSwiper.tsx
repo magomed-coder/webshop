@@ -1,140 +1,111 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./ImageSwiper.module.css";
-
-const SWIPE_THRESHOLD = 50;
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 interface ImageSwiperProps {
-  images: string[];
+  data: string[];
   showArrows?: boolean;
 }
 
 const ImageSwiper: React.FC<ImageSwiperProps> = ({
-  images,
+  data,
   showArrows = false,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [swipeDirection, setSwipeDirection] = useState<"left" | "right" | null>(
-    null
-  );
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handlePrev = useCallback(() => {
-    if (isTransitioning) return;
+  useEffect(() => {
+    const handleScroll = () => {
+      if (containerRef.current) {
+        const scrollLeft = containerRef.current.scrollLeft;
+        const containerWidth = containerRef.current.offsetWidth;
+        const index = Math.round(scrollLeft / containerWidth);
 
-    setIsTransitioning(true);
-    setSwipeDirection("right");
-
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-      setSwipeDirection(null);
-      setIsTransitioning(false);
-    }, 300);
-  }, [images.length, isTransitioning]);
-
-  const handleNext = useCallback(() => {
-    if (isTransitioning) return;
-
-    setIsTransitioning(true);
-    setSwipeDirection("left");
-
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-      setSwipeDirection(null);
-      setIsTransitioning(false);
-    }, 300);
-  }, [images.length, isTransitioning]);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStartX(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX === null) return;
-
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX - touchEndX;
-
-    if (Math.abs(diff) > SWIPE_THRESHOLD) {
-      if (diff > 0) {
-        handleNext();
-      } else {
-        handlePrev();
+        setCurrentIndex(index);
       }
-    }
+    };
 
-    setTouchStartX(null);
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
+
+  // Функция для перехода к определенному слайду
+  const scrollToIndex = (index: number) => {
+    if (containerRef.current) {
+      const containerWidth = containerRef.current.offsetWidth;
+      containerRef.current.scrollTo({
+        left: index * containerWidth,
+        behavior: "smooth",
+      });
+    }
   };
 
-  const goToImage = (index: number) => {
-    if (isTransitioning || index === currentIndex) return;
+  // Обработчики для кнопок навигации
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      scrollToIndex(currentIndex - 1);
+    }
+  };
 
-    setIsTransitioning(true);
-    setSwipeDirection(index > currentIndex ? "left" : "right");
-
-    setTimeout(() => {
-      setCurrentIndex(index);
-      setSwipeDirection(null);
-      setIsTransitioning(false);
-    }, 300);
+  const handleNext = () => {
+    if (currentIndex < data.length - 1) {
+      scrollToIndex(currentIndex + 1);
+    }
   };
 
   return (
-    <div
-      className={styles.productImage}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
-      <div className={styles.imageContainer}>
-        <div
-          className={`${styles.slider} ${
-            swipeDirection ? styles[swipeDirection] : ""
-          }`}
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {images.map((image, index) => (
+    <div className={styles.container}>
+      <div ref={containerRef} className={styles.scrollContainer}>
+        <div className={styles.slider}>
+          {data.map((image, index) => (
             <div key={index} className={styles.slide}>
               <img
                 src={image}
-                alt={`Product view ${index + 1}`}
-                className={styles.mainImage}
+                alt={`Slide ${index + 1}`}
+                className={styles.image}
               />
             </div>
           ))}
         </div>
-
-        {showArrows
-          ? images.length > 1 && (
-              <>
-                <button
-                  className={styles.navButtonPrev}
-                  onClick={handlePrev}
-                  aria-label="Previous image"
-                >
-                  ‹
-                </button>
-                <button
-                  className={styles.navButtonNext}
-                  onClick={handleNext}
-                  aria-label="Next image"
-                >
-                  ›
-                </button>
-              </>
-            )
-          : null}
       </div>
 
-      {images.length > 1 && (
-        <div className={styles.imagePagination}>
-          {images.map((_, index) => (
+      {/* Кнопки навигации */}
+      {showArrows
+        ? data.length > 1 && (
+            <>
+              <button
+                className={`${styles.navButton} ${styles.prevButton}`}
+                onClick={handlePrev}
+                disabled={currentIndex === 0}
+              >
+                <IoChevronBack size={24} style={{ marginLeft: "-4px" }} />
+              </button>
+
+              <button
+                className={`${styles.navButton} ${styles.nextButton}`}
+                onClick={handleNext}
+                disabled={currentIndex === data.length - 1}
+              >
+                <IoChevronForward size={24} style={{ marginLeft: "4px" }} />
+              </button>
+            </>
+          )
+        : null}
+
+      {/* Индикаторы (точки) */}
+      {data.length > 1 && (
+        <div className={styles.dotsContainer}>
+          {data.map((_, index) => (
             <button
               key={index}
-              className={`${styles.paginationDot} ${
+              className={`${styles.dot} ${
                 index === currentIndex ? styles.activeDot : ""
               }`}
-              onClick={() => goToImage(index)}
-              aria-label={`Go to image ${index + 1}`}
+              onClick={() => scrollToIndex(index)}
+              aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
