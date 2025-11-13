@@ -37,7 +37,6 @@
 .contentWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
   margin-top: 20px;
 }
 
@@ -196,24 +195,6 @@
   color: #f05252;
 }
 
-.shareActionButton {
-  display: flex;
-  flex-direction: row;
-  background-color: #192028;
-  border-radius: 12px;
-  padding: 18px;
-  margin-top: 24px;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-size: 16px;
-  width: 100%;
-  transition: background-color 0.2s;
-}
-
 @media (max-width: 768px) {
   .shareActionButton {
     width: calc(100% - 40px);
@@ -223,8 +204,4 @@
 
 .shareActionButton:hover {
   background-color: #2a3845;
-}
-
-.shareActionLabel {
-  margin-left: 12px;
 }

@@ -161,16 +161,17 @@ const ProductListScreen: React.FC = () => {
         onOpenFilters={openFilters}
         isLoading={isLoading}
       />
-
-      <div className={styles.productsContainer}>
-        {(isLoading ? skeletonProducts : visibleProducts).map((item) => (
-          <ProductCard
-            key={item.id}
-            product={item}
-            onPress={() => openProduct(item.id)}
-            isLoading={isLoading}
-          />
-        ))}
+      <div className={styles.productsWrapper}>
+        <div className={styles.productsContainer}>
+          {(isLoading ? skeletonProducts : visibleProducts).map((item) => (
+            <ProductCard
+              key={item.id}
+              product={item}
+              onPress={() => openProduct(item.id)}
+              isLoading={isLoading}
+            />
+          ))}
+        </div>
       </div>
 
       <FilterModal

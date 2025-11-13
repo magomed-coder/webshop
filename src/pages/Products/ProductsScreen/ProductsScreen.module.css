@@ -1,4 +1,13 @@
 /* src/pages/ProductsScreen.module.css */
+.productsWrapper {
+  height: calc(100vh - 123px);
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+}
+
+.productsWrapper:-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
 
 .productsContainer {
   display: grid;

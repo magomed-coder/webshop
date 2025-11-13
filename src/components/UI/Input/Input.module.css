@@ -1,0 +1,58 @@
+/* src/components/ui/Input/Input.module.css */
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  color: #2f3544;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+
+  border: 2px solid #bcbcbc;
+  border-radius: 6px;
+  padding: 0 10px 0 5px;
+
+  transition: border-color 0.2s ease;
+}
+
+.container:focus-within {
+  border-color: #192028;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 12px 0;
+  background: transparent;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.error {
+  border-color: #ef4444;
+}
+
+.errorText {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #ef4444;
+}

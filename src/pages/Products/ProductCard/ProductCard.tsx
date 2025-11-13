@@ -43,13 +43,13 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(
             className={styles.productImage}
           />
 
-          {(product.extraBonus ?? 0) > 0 && (
+          {/* {(product.extraBonus ?? 0) > 0 && (
             <div className={styles.extraBonusBadge}>
               <Paragraph variant="u500.12" className={styles.extraBonusText}>
                 +{formatPrice(product.extraBonus ? product.extraBonus : 0)}₽
               </Paragraph>
             </div>
-          )}
+          )} */}
         </div>
 
         <Paragraph variant="u500.15" className={styles.productName}>
@@ -65,12 +65,12 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(
               </Paragraph>
             </div>
 
-            <div className={styles.priceItem}>
+            {/* <div className={styles.priceItem}>
               <IoGiftOutline size={14} color="#6B7280" />
               <Paragraph variant="u500.14" className={styles.referralText}>
                 {formatPrice(product.referralBonus)}₽
               </Paragraph>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

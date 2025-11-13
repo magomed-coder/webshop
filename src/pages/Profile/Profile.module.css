@@ -1,0 +1,82 @@
+.safeArea {
+  background-color: #fff;
+  min-height: calc(100vh - var(--tabbar-height));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scrollContainer {
+  /* flex: 1; */
+  /* padding-bottom: 20px;
+  padding-left: 16px;
+  padding-right: 16px; */
+}
+
+.section {
+  /* margin-top: 20px; */
+}
+
+.borderedSection {
+  border-top: 1px solid rgba(0, 97, 255, 0.1);
+  padding-top: 20px;
+}
+
+.settingsItemContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.settingsItemContainer:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.disabledItem {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.settingsItemContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  border-radius: 6px;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.settingsText {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.versionContainer {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.versionText {
+  color: #999;
+  font-size: 12px;
+}
+
+.dangerText {
+  color: #e60023;
+}
+
+.logout {
+  margin-top: auto;
+  border: 5px solid #e60023;
+  padding: 0 2px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: auto;
+}

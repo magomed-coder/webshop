@@ -1,10 +1,72 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap");
 
+:root {
+  --tabbar-height: 67px;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Ubuntu", sans-serif;
+}
+
+.app-container {
+  min-height: 100vh;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Стили для мобильного таббара */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #192028;
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #bebebe;
+  padding: 5px 10px;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  color: #e0dff6;
+}
+
+.tab-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+  transition: transform 0.2s ease;
+}
+
+.tab-item.active .tab-icon {
+  transform: scale(1.2);
+}
+
+.tab-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+  .app-container {
+    padding-bottom: var(
+      --tabbar-height
+    ); /* Высота таббара + дополнительное пространство */
+  }
 }
 
 .ubuntu-regular {
