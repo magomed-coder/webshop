@@ -7,6 +7,11 @@ export function AppNavigation() {
   const location = useLocation();
   const isMobile = useIsMobile();
 
+  // Скрываем навигацию на страницах админки
+  if (location.pathname.startsWith("/admin")) {
+    return null;
+  }
+
   {
     /* Мобильный таббар */
   }

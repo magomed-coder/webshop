@@ -13,7 +13,8 @@ export default function NotFound() {
       text="Похоже, вы перешли по неверной ссылке или страница была удалена."
       buttonLabel="На главную"
       buttonIcon={<MdHome size={20} />}
-      onButtonClick={() => navigate("/")}
+      // onButtonClick={() => navigate("/")}
+      onButtonClick={() => navigate("/", { replace: true })}
     />
   );
 }

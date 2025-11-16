@@ -1,69 +1,266 @@
-# React + TypeScript + Vite
+# Система реферальных ссылок и заказов
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Полное описание архитектуры, API, бизнес-логики и процессов учёта переходов, заказов и выплат.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Описание проекта
 
-## Expanding the ESLint configuration
+Система позволяет пользователям мобильного приложения генерировать персональные реферальные ссылки на товары. Каждая ссылка живёт **24 часа**, привязана к конкретному пользователю и конкретному товару.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Через эти ссылки пользователи:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- делятся товарами в соцсетях;
+- привлекают клиентов на веб-приложение;
+- получают бонусы за успешные сделки;
+- отслеживают клики, заказы и выплаты.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Переходы по ссылке происходят через веб-приложение, где клиент оставляет заявку. На основании заявки создаётся **Order**, который менеджер обрабатывает и закрывает.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Когда заказ успешно завершён — создаётся **Payment**. После выплаты система автоматически проверяет, нужно ли закрыть ссылку.
+
+---
+
+# 🧩 Архитектура и потоки данных
+
+## 1. Создание реферальной ссылки
+
+**Процесс:** мобильное приложение → API → БД
+
+```text
+User (mobile)
+    |
+    v
+[POST /share-links]
+    |
+    v
+Back-end:
+  - генерирует referralCode
+  - добавляет userId и productId
+  - expiryDate = now + 24h
+  - clickCount = 0
+  - payoutAmountLeft = referralBonus + extraBonus
+  - status = "active"
+    |
+    v
+  DB: ShareLinks
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 2. Переход по ссылке (веб)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+Client Browser → /r/:referralCode
+    |
+    v
+[GET /share-links/:referralCode]
+    |
+    v
+Back-end:
+  - проверяет существование ссылки
+  - проверяет срок действия
+  - если истекла → { status: "expired" }
+  - если активна:
+      clickCount++
+      вернуть productId, categoryName, shareLinkId
 ```
+
+Фронтенд перенаправляет пользователя:
+
+```
+/products/:category/:productId
+```
+
+---
+
+## 3. Клиент оставляет заявку → создаётся Order
+
+```text
+Client → [POST /orders]
+```
+
+Body примера:
+
+```json
+{
+  "name": "Елена",
+  "phone": "+79998887766",
+  "productId": 120,
+  "referralCode": "ABC123"
+}
+```
+
+**Back-end:**
+
+- находит ShareLink
+- создаёт Order:
+
+  - status = "pending"
+  - shareLinkId
+  - referralReward = referralBonus + extraBonus
+
+- увеличивает ShareLink.totalOrders
+
+---
+
+## 4. Работа менеджера
+
+Менеджер в админке меняет статус заказа:
+
+```
+pending → in_progress → success / failed
+```
+
+---
+
+## 5. Создание Payment при успешном заказе
+
+Если `Order.status = success`:
+
+```
+создаётся Payment:
+  - orderId
+  - shareLinkId
+  - amount = referralReward
+  - status = "created"
+```
+
+---
+
+## 6. Выплата (Payment → paid)
+
+После подтверждения выплаты бухгалтерией:
+
+```text
+[Payment paid]
+    |
+    v
+Order.payoutPaid = true
+    |
+    v
+sumPayments = SUM(Payments where shareLinkId)
+    |
+    v
+ShareLink.payoutAmountLeft = totalBonus - sumPayments
+    |
+    v
+Условия закрытия ShareLink:
+  - payoutAmountLeft == 0
+  - нет Orders в pending или in_progress
+  - (expiryDate < now) ИЛИ (все выплаты завершены)
+    |
+    v
+Если все условия выполнены → ShareLink.status = "closed"
+```
+
+---
+
+# 🧱 Схема связей моделей
+
+```text
+User 1 ──── M ShareLinks
+ShareLinks 1 ──── M Orders
+Orders 1 ──── 1 Payments
+```
+
+---
+
+# 🔄 Статусы
+
+## Order.status
+
+- `pending` — клиент оставил заявку
+- `in_progress` — менеджер работает
+- `success` — сделка завершена
+- `failed` — сделка не состоялась
+
+## Payment.status
+
+- `created` — начислено
+- `paid` — выплачено
+
+## ShareLink.status
+
+- `active` — рабочая ссылка
+- `expired` — срок вышел, но есть заказы
+- `closed` — все заказы закрыты, выплаты сделаны
+
+---
+
+# 🌐 API Endpoints
+
+Ниже перечислены ключевые API-методы, используемые системой.
+
+## 🔗 ShareLinks
+
+### **POST /share-links** — создать ссылку
+
+```json
+{
+  "productId": 105
+}
+```
+
+### **GET /share-links/:referralCode** — проверить ссылку
+
+Возвращает productId и категорию.
+
+### **GET /users/:id/share-links** — ссылки пользователя
+
+---
+
+## 📝 Orders
+
+### **POST /orders** — создать заказ
+
+```json
+{
+  "name": "Иван",
+  "phone": "+79998887766",
+  "productId": 105,
+  "referralCode": "ABC123"
+}
+```
+
+### **PATCH /orders/:id/status** — обновить статус
+
+```json
+{
+  "status": "in_progress"
+}
+```
+
+---
+
+## 💸 Payments
+
+### **POST /payments** — создать платёж
+
+```json
+{
+  "orderId": 530,
+  "amount": 1500
+}
+```
+
+### **PATCH /payments/:id/pay** — подтвердить выплату
+
+---
+
+# ✔️ Итоги
+
+README содержит:
+
+- архитектуру;
+- все процессы от создания ссылки до выплат;
+- статусы заказов, ссылок и выплат;
+- структуру основных API запросов;
+- схемы потоков данных и зависимостей.
+
+Если нужно — могу добавить:
+
+- ER-диаграмму (mermaid)
+- примеры SQL/Prisma схем
+- документацию Swagger/OpenAPI
+- схемы фронтенд-логики (React Native + React)
