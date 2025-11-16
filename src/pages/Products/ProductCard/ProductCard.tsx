@@ -1,6 +1,6 @@
 // src/components/products/ProductCard.tsx
 
-import { IoPricetagOutline, IoGiftOutline } from "react-icons/io5";
+import { IoPricetagOutline } from "react-icons/io5";
 import React from "react";
 import styles from "./ProductCard.module.css";
 import { Paragraph } from "@components/UI/Paragraph/Paragraph";
@@ -27,7 +27,6 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(
           <div className={styles.productMetaRow}>
             <div className={styles.priceBlock}>
               <div className={styles.skeletonPrice}></div>
-              <div className={styles.skeletonPrice}></div>
             </div>
           </div>
         </div>
@@ -42,14 +41,6 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(
             alt={product.name}
             className={styles.productImage}
           />
-
-          {/* {(product.extraBonus ?? 0) > 0 && (
-            <div className={styles.extraBonusBadge}>
-              <Paragraph variant="u500.12" className={styles.extraBonusText}>
-                +{formatPrice(product.extraBonus ? product.extraBonus : 0)}₽
-              </Paragraph>
-            </div>
-          )} */}
         </div>
 
         <Paragraph variant="u500.15" className={styles.productName}>
@@ -64,13 +55,6 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(
                 {formatPrice(product.price)}₽
               </Paragraph>
             </div>
-
-            {/* <div className={styles.priceItem}>
-              <IoGiftOutline size={14} color="#6B7280" />
-              <Paragraph variant="u500.14" className={styles.referralText}>
-                {formatPrice(product.referralBonus)}₽
-              </Paragraph>
-            </div> */}
           </div>
         </div>
       </div>

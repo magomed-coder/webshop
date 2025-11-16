@@ -1,0 +1,43 @@
+.container {
+  padding: 24px;
+  background-color: #f9fafb; /* светлый фон страницы */
+  min-height: 100vh; /* чтобы занимало всю высоту */
+  box-sizing: border-box;
+}
+
+.header {
+  font-size: 28px;
+  font-weight: 600;
+  color: #111827; /* почти чёрный */
+  margin-bottom: 16px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.cardContent {
+  font-size: 14px;
+  color: #4b5563; /* серый текст */
+}

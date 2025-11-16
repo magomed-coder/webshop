@@ -26,6 +26,7 @@ export const STORAGE_KEYS = {
     ACCESS: "access_token",
     REFRESH: "refresh_token",
   },
+  REFERRAL_CODE: "referral_code",
 } as const;
 
 // /** список доступных локаций */

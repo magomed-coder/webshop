@@ -7,10 +7,19 @@ import {
 } from "services/tokenStorage";
 import { create } from "zustand";
 
+export enum UserRole {
+  USER = "user",
+  PARTNER = "partner",
+  MANAGER = "manager",
+  ADMIN = "admin",
+}
+
 interface User {
   id: number;
   username: string;
   email: string;
+  phone: string | null;
+  role: UserRole;
 }
 
 interface AuthState {
@@ -39,7 +48,14 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   accessToken: null,
-  user: null,
+  // user: null,
+  user: {
+    id: 111,
+    username: "string",
+    email: "string@mail.ru",
+    phone: "9000292922",
+    role: UserRole.ADMIN,
+  },
   isLoading: false,
   isAuth: false,
   isRefreshing: false,
