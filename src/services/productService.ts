@@ -4,8 +4,8 @@
 //   );
 // };
 
-import { mockProducts } from "constants/data";
-import type { CategoryName, ReferralStats } from "types";
+import { mockProducts } from "@/constants/data";
+import type { CategoryName, ReferralStats } from "@/types";
 
 export const fetchProductsByCategory = async (
   category?: CategoryName

@@ -6,14 +6,14 @@ import { MdSearchOff } from "react-icons/md";
 import styles from "./ProductsScreen.module.css";
 import FilterModal from "../FilterModal/FilterModal";
 import { ProductCard } from "../ProductCard/ProductCard";
-import { skeletonProducts } from "constants/data";
-import { getCategoryTitle } from "lib/utils/category.utils";
-import { Paragraph } from "@components/UI/Paragraph/Paragraph";
-import { fetchProductsByCategory } from "services/productService";
-import { LOCATIONS } from "constants/main";
-import type { CategoryName, FilterType, Product } from "types";
+import { skeletonProducts } from "@/constants/data";
+import { getCategoryTitle } from "@/lib/utils/category.utils";
+import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
+import { fetchProductsByCategory } from "@/services/productService";
+import { LOCATIONS } from "@/constants/main";
+import type { CategoryName, FilterType, Product } from "@/types";
 import { ProductsHeader } from "../ProductsHeader/ProductsHeader";
-import { Container } from "@components/UI/Container/Container";
+import { Container } from "@/components/shared/Container/Container";
 
 const ProductListScreen: React.FC = () => {
   const { categoryName } = useParams<{

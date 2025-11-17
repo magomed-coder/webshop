@@ -2,7 +2,7 @@
 import React from "react";
 import { IoOptionsOutline } from "react-icons/io5";
 import styles from "./ProductsHeader.module.css";
-import { Title } from "@components/UI/Title/Title";
+import { Title } from "@/components/shared/Title/Title";
 
 interface HeaderProps {
   title?: string;

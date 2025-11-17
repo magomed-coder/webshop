@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "./Invite.module.css";
 import { FiEye, FiEyeOff, FiLogIn } from "react-icons/fi";
-import { Button } from "@components/UI/Button";
-import { Input } from "@components/UI/Input";
+
+import { Input } from "@/components/shared/Input";
+import { Button } from "@/components/shared/Button";
 
 function Invite() {
   const { referralCode } = useParams<{ referralCode: string }>();

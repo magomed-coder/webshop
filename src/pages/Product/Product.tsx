@@ -12,17 +12,18 @@ import {
   IoClose,
 } from "react-icons/io5";
 import { MdCategory, MdInventory } from "react-icons/md";
-import type { Product } from "types";
-import { mockProducts } from "constants/data";
-import { getCategoryTitle } from "lib/utils/category.utils";
-import { formatPrice } from "lib/utils/formatters";
-import ImageSwiper from "@components/ImageSwiper/ImageSwiper";
-import { useIsMobile } from "hooks/useIsMobile";
-import BackButton from "@components/UI/BackButton/BackButton";
-import { Button } from "@components/UI/Button";
+import type { Product } from "@/types";
+import { mockProducts } from "@/constants/data";
+import { getCategoryTitle } from "@/lib/utils/category.utils";
+import { formatPrice } from "@/lib/utils/formatters";
+import ImageSwiper from "@/components/ImageSwiper/ImageSwiper";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import BackButton from "@/components/shared/BackButton/BackButton";
+
 import { Sheet } from "react-modal-sheet";
-import { Input } from "@components/UI/Input";
-import { useReferral } from "hooks/useReferral";
+import { Input } from "@/components/shared/Input";
+import { useReferral } from "@/hooks/useReferral";
+import { Button } from "@/components/shared/Button";
 
 const CONTACT_PHONE_KEY = "contact_phone";
 

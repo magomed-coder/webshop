@@ -1,8 +1,8 @@
 // src/components/UI/InfoScreen/InfoScreen.tsx
 import React from "react";
 import styles from "./InfoScreen.module.css";
-import { Paragraph } from "@components/UI/Paragraph/Paragraph";
-import { Button } from "@components/UI/Button";
+import { Paragraph } from "../Paragraph/Paragraph";
+import { Button } from "../Button";
 
 interface InfoScreenProps {
   icon?: React.ReactNode;

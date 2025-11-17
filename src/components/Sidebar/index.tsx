@@ -12,10 +12,8 @@ import {
   LuShield,
   LuLogOut,
 } from "react-icons/lu";
-import { useAuthStore } from "contexts/useAuthStore";
-import { LogoutButton } from "@components/LogoutButton";
-
-// import { LogoutButton } from "./LogoutButton";
+import { useAuthStore } from "@/contexts/useAuthStore";
+import { LogoutButton } from "../LogoutButton";
 
 export const Sidebar = () => {
   const location = useLocation();
@@ -26,15 +24,15 @@ export const Sidebar = () => {
     { path: "/admin/dashboard", label: "Главная", icon: LuHouse },
     { path: "/admin/orders", label: "Заказы", icon: LuShoppingCart },
     { path: "/admin/payments", label: "Оплаты", icon: LuCreditCard },
-    { path: "/admin/products", label: "Товары", icon: LuPackage },
   ];
 
   // Меню для администратора
   const adminMenu = [
     ...userMenu,
-    { path: "/admin/settings", label: "Настройки", icon: LuSettings },
+    { path: "/admin/products", label: "Товары", icon: LuPackage },
     { path: "/admin/users", label: "Пользователи", icon: LuUsers },
     { path: "/admin/admin", label: "Админ-панель", icon: LuShield },
+    { path: "/admin/settings", label: "Настройки", icon: LuSettings },
   ];
 
   const menuItems = currentUser?.role === "admin" ? adminMenu : userMenu;

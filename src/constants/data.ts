@@ -1,13 +1,13 @@
-import building_3 from "assets/images/building_3.png";
-import car_1 from "assets/images/car_1.png";
-import concrete_2_mixer from "assets/images/concrete_2_mixer-truck-chute-metal.png";
-import electronics_1_phone from "assets/images/electronics_1_phone.png";
-import furniture_1_sofa from "assets/images/furniture_1_sofa.png";
+import building_3 from "@/assets/images/building_3.png";
+import car_1 from "@/assets/images/car_1.png";
+import concrete_2_mixer from "@/assets/images/concrete_2_mixer-truck-chute-metal.png";
+import electronics_1_phone from "@/assets/images/electronics_1_phone.png";
+import furniture_1_sofa from "@/assets/images/furniture_1_sofa.png";
 // import perfume_2 from "assets/images/perfume_2.png";
-import perfume_2 from "assets/images/perfume_2.png";
+import perfume_2 from "@/assets/images/perfume_2.png";
 
-import sports_nutrition from "assets/images/sports_nutrition.png";
-import { CategoryName, type Category, type Product } from "../types";
+import sports_nutrition from "@/assets/images/sports_nutrition.png";
+import { CategoryName, type Category, type Product } from "@/types";
 
 export const images = {
   building_3,

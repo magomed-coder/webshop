@@ -1,11 +1,11 @@
 // src/components/products/FilterModal.tsx
 import React from "react";
 import styles from "./FilterModal.module.css";
-import { Paragraph } from "@components/UI/Paragraph/Paragraph";
-import { LOCATIONS } from "constants/main";
-import type { FilterType } from "types";
-import { Checkbox } from "@components/UI/Checkbox/Checkbox";
-import { RadioButton } from "@components/UI/RadioButton/RadioButton";
+import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
+import { LOCATIONS } from "@/constants/main";
+import type { FilterType } from "@/types";
+import { Checkbox } from "@/components/shared/Checkbox/Checkbox";
+import { RadioButton } from "@/components/shared/RadioButton/RadioButton";
 import { MdClose } from "react-icons/md";
 import { Sheet } from "react-modal-sheet";
 

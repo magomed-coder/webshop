@@ -1,8 +1,9 @@
 // src/components/AdminRoute.tsx
-import { UserRole, useAuthStore } from "contexts/useAuthStore";
 import React, { type JSX } from "react";
 import { Navigate } from "react-router-dom";
-import { Loader } from "./UI/Loader";
+
+import { UserRole, useAuthStore } from "@/contexts/useAuthStore";
+import { Loader } from "./shared/Loader";
 
 interface Props {
   children: JSX.Element;
@@ -20,7 +21,7 @@ const AdminRoute: React.FC<Props> = ({ children }) => {
     return <Navigate to="/admin/login" replace />;
   }
 
-  if (currentUser.role !== UserRole.ADMIN) {
+  if (![UserRole.ADMIN, UserRole.MANAGER].includes(currentUser.role)) {
     return <Navigate to="/" replace />;
   }
 

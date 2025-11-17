@@ -1,10 +1,10 @@
-import { ENDPOINTS } from "constants/main";
-import api from "lib/api";
+import { ENDPOINTS } from "@/constants/main";
+import api from "@/lib/api";
 import {
   clearAuthTokens,
   getAccessToken,
   saveAuthTokens,
-} from "services/tokenStorage";
+} from "@/services/tokenStorage";
 import { create } from "zustand";
 
 export enum UserRole {
@@ -14,7 +14,7 @@ export enum UserRole {
   ADMIN = "admin",
 }
 
-interface User {
+export interface User {
   id: number;
   username: string;
   email: string;
@@ -54,7 +54,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     username: "string",
     email: "string@mail.ru",
     phone: "9000292922",
-    role: UserRole.ADMIN,
+    role: UserRole.MANAGER,
   },
   isLoading: false,
   isAuth: false,

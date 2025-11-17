@@ -1,6 +1,6 @@
-import { Title } from "@components/UI/Title/Title";
+import { Title } from "@/components/shared/Title/Title";
 import styles from "./about.module.css";
-import { Container } from "@components/UI/Container/Container";
+import { Container } from "@/components/shared/Container/Container";
 
 const AboutUs = () => {
   return (

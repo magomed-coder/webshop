@@ -1,5 +1,5 @@
 // hooks/useReferral.ts
-import { STORAGE_KEYS } from "constants/main";
+import { STORAGE_KEYS } from "@/constants/main";
 import { useLocation } from "react-router-dom";
 
 export const useReferral = () => {

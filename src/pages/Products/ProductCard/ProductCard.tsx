@@ -3,9 +3,9 @@
 import { IoPricetagOutline } from "react-icons/io5";
 import React from "react";
 import styles from "./ProductCard.module.css";
-import { Paragraph } from "@components/UI/Paragraph/Paragraph";
-import type { Product } from "types";
-import { formatPrice } from "lib/utils/formatters";
+import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
+import type { Product } from "@/types";
+import { formatPrice } from "@/lib/utils/formatters";
 
 interface ProductCardProps {
   product: Product;

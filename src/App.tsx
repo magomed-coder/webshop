@@ -1,25 +1,25 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-
-import Main from "./pages/Main/MainScreen";
-import Product from "./pages/Product/Product";
-import Profile from "./pages/Profile/Profile";
+import ProductRedirect from "./pages/ProductRedirect";
+import Invite from "./pages/Invite";
 import Categories from "./pages/Categories/CategoriesScreen/Categories";
+import Profile from "./pages/Profile/Profile";
+import Product from "./pages/Product/Product";
+import ProductsScreen from "./pages/Products/ProductsScreen/ProductsScreen";
 import About from "./pages/About/About";
 
-import { AppNavigation } from "navigation/Navigation";
-import ProductsScreen from "@pages/Products/ProductsScreen/ProductsScreen";
-import NotFound from "@pages/NotFound";
-import Invite from "@pages/Invite";
-import ProductRedirect from "@pages/ProductRedirect";
-import AdminRoute from "@components/AdminRoute";
+import Main from "./pages/Main/MainScreen";
+import AdminRoute from "./components/AdminRoute";
+import { AdminLayout } from "./layout/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import Orders from "./pages/admin/Orders";
 
-import Dashboard from "@pages/admin/Dashboard";
-import Orders from "@pages/admin/Orders";
-import Products from "@pages/admin/Products";
-import Payments from "@pages/admin/Products";
-import Settings from "@pages/admin/Settings";
-import Users from "@pages/admin/Users";
-import { AdminLayout } from "layout/AdminLayout";
+import Payments from "./pages/admin/Payments";
+import Settings from "./pages/admin/Settings";
+// import Users from "./pages/admin/Users";
+import NotFound from "./pages/NotFound";
+import { AppNavigation } from "./navigation/Navigation";
+import Users from "./pages/admin/Users";
+import Products from "./pages/admin/Products";
 
 function App() {
   return (
@@ -57,7 +57,6 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="payments" element={<Payments />} />
           <Route path="settings" element={<Settings />} />
-          <Route path="users" element={<Payments />} />
           <Route path="users" element={<Users />} />
         </Route>
 

@@ -1,6 +1,6 @@
 // src/pages/ProductRedirect/ProductRedirect.tsx
-import { Loader } from "@components/UI/Loader";
-import { STORAGE_KEYS } from "constants/main";
+import { Loader } from "@/components/shared/Loader";
+import { STORAGE_KEYS } from "@/constants/main";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
