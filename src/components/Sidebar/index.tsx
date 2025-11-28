@@ -4,7 +4,6 @@ import styles from "./Sidebar.module.css";
 
 import {
   LuHouse,
-  LuShoppingCart,
   LuPackage,
   LuCreditCard,
   LuUsers,
@@ -14,6 +13,7 @@ import {
 } from "react-icons/lu";
 import { useAuthStore } from "@/contexts/useAuthStore";
 import { LogoutButton } from "../LogoutButton";
+import { FiShoppingBag } from "react-icons/fi";
 
 export const Sidebar = () => {
   const location = useLocation();
@@ -22,7 +22,7 @@ export const Sidebar = () => {
   // Меню для обычных пользователей
   const userMenu = [
     { path: "/admin/dashboard", label: "Главная", icon: LuHouse },
-    { path: "/admin/orders", label: "Заказы", icon: LuShoppingCart },
+    { path: "/admin/orders", label: "Заказы", icon: FiShoppingBag },
     { path: "/admin/payments", label: "Оплаты", icon: LuCreditCard },
   ];
 

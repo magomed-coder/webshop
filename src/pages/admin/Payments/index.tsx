@@ -255,21 +255,22 @@ export const paymentColumns: ColumnDef<Payment, any>[] = [
     enableGlobalFilter: true,
     cell: ({ getValue }: CellContext<Payment, PaymentStatus>) => {
       const status = getValue();
-      const isPaid = status === "paid";
+
+      const styleMap = {
+        created: "bg-blue-100 text-blue-700 border-blue-200",
+        paid: "bg-[#E4EBEE] text-[#4A6670] border-[#CCD5D9]",
+      };
+
+      const iconMap = {
+        created: <FiClock className="w-4 h-4" />,
+        paid: <FiCheckCircle className="w-4 h-4" />,
+      };
 
       return (
         <div
-          className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium border ${
-            isPaid
-              ? "bg-gray-50 text-gray-700 border-gray-300"
-              : "bg-gray-50 text-gray-700 border-gray-300"
-          }`}
+          className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium border ${styleMap[status]}`}
         >
-          {isPaid ? (
-            <FiCheckCircle className="w-4 h-4" />
-          ) : (
-            <FiClock className="w-4 h-4" />
-          )}
+          {iconMap[status]}
           {paymentStatusMap[status]}
         </div>
       );
