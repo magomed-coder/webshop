@@ -34,10 +34,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/invite/:referralCode" element={<Invite />} />
-        <Route
-          path="/product-link/:referralCode"
-          element={<ProductRedirect />}
-        />
+        <Route path="/link/:referralCode" element={<ProductRedirect />} />
 
         {/* 🔐 Только для ADMIN */}
         <Route
