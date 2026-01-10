@@ -6,7 +6,7 @@ import {
   saveAuthTokens,
 } from "@/services/tokenStorage";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
@@ -80,8 +80,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export default api;
 
 export const refreshToken = async () => {
   const refresh_token = await getRefreshToken();

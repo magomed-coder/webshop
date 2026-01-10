@@ -2,8 +2,8 @@
 import React, { type JSX } from "react";
 import { Navigate } from "react-router-dom";
 
-import { UserRole, useAuthStore } from "@/contexts/useAuthStore";
 import { Loader } from "./shared/Loader";
+import { ROLES, useAuthStore } from "@/contexts/auth.store";
 
 interface Props {
   children: JSX.Element;
@@ -11,7 +11,7 @@ interface Props {
 
 const AdminRoute: React.FC<Props> = ({ children }) => {
   const currentUser = useAuthStore((state) => state.user);
-  const isLoading = useAuthStore((state) => state.isLoading);
+  const isLoading = useAuthStore((state) => state.isAuthLoading);
 
   if (isLoading) {
     return <Loader />;
@@ -22,9 +22,7 @@ const AdminRoute: React.FC<Props> = ({ children }) => {
   }
 
   if (
-    ![UserRole.ADMIN, UserRole.MANAGER].some(
-      (role) => role === currentUser.role
-    )
+    ![ROLES.SUBADMIN, ROLES.MANAGER].some((role) => role === currentUser.role)
   ) {
     return <Navigate to="/" replace />;
   }

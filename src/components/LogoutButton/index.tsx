@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./LogoutButton.module.css";
 import { LuLogOut } from "react-icons/lu";
-import { useAuthStore } from "@/contexts/useAuthStore";
+import { useAuthStore } from "@/contexts/auth.store";
 
 interface LogoutButtonProps {
   className?: string;

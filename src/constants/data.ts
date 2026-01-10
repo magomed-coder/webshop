@@ -12,6 +12,7 @@ import {
   type Category,
   type CategoryNameValue,
   type Product,
+  type ProductDTO,
 } from "@/types";
 
 export const images = {
@@ -193,7 +194,7 @@ function generateMockProducts(categoryKey: number): Product[] {
 /**
  * Словарь продуктов по категории (30 товаров в каждой).
  */
-export const mockProducts: Record<CategoryNameValue, Product[]> = {
+export const mockProducts: Record<string, Product[]> = {
   [CategoryName.RealEstate]: generateMockProducts(1),
   [CategoryName.AutoParts]: generateMockProducts(2),
   [CategoryName.BuildingMaterials]: generateMockProducts(3),
@@ -203,18 +204,19 @@ export const mockProducts: Record<CategoryNameValue, Product[]> = {
   [CategoryName.SportsNutrition]: generateMockProducts(7),
 };
 
-export const skeletonProducts: Product[] = Array.from({ length: 8 }).map(
+export const skeletonProducts: ProductDTO[] = Array.from({ length: 8 }).map(
   (_, i) => ({
     id: i,
-    name: "",
-    price: 0,
-    images: ["", ""],
+    title: "",
     description: "",
-    referralUrl: "",
-    referralBonus: 0,
-    extraBonus: 0,
-    category: CategoryName.RealEstate,
-    inStock: false,
+    price: "",
+    is_active: false,
+    bonus: "",
+    extra_bonus: "",
+    total_bonus: "",
+    category: i,
+    category_name: "",
+    images: [],
     isPromo: false,
   })
 );

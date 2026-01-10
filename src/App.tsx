@@ -27,11 +27,11 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/products/:categoryName" element={<ProductsScreen />} />
-        <Route path="/products/:categoryName/:id" element={<Product />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/categories" element={<Categories />} />
+        <Route path="/products/:categoryId" element={<ProductsScreen />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
         {/* <Route path="/invite/:referralCode" element={<Invite />} /> */}
         <Route path="/link/:referralCode" element={<ProductRedirect />} />
 

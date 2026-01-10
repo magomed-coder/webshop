@@ -11,9 +11,10 @@ import {
   LuShield,
   LuLogOut,
 } from "react-icons/lu";
-import { useAuthStore } from "@/contexts/useAuthStore";
+
 import { LogoutButton } from "../LogoutButton";
 import { FiShoppingBag } from "react-icons/fi";
+import { ROLES, useAuthStore } from "@/contexts/auth.store";
 
 export const Sidebar = () => {
   // const location = useLocation();
@@ -35,7 +36,7 @@ export const Sidebar = () => {
     { path: "/admin/settings", label: "Настройки", icon: LuSettings },
   ];
 
-  const menuItems = currentUser?.role === "admin" ? adminMenu : userMenu;
+  const menuItems = currentUser?.role === ROLES.SUBADMIN ? adminMenu : userMenu;
 
   return (
     <nav className={styles.sidebar}>

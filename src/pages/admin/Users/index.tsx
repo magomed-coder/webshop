@@ -1,5 +1,6 @@
 import { DataTable } from "@/components/ui/DataTable";
-import type { User } from "@/contexts/useAuthStore";
+import type { User, UserRole } from "@/contexts/auth.store";
+
 import type { CellContext } from "@tanstack/react-table";
 
 export default function Users() {
@@ -17,14 +18,14 @@ const users: User[] = Array.from({ length: 120 }, (_, i) => ({
   username: `user${i + 1}`, // теперь есть обязательное поле
   email: `user${i + 1}@mail.com`,
   phone: `+7 900 000 ${String(i + 1).padStart(4, "0")}`,
-  role: ["user", "admin", "manager", "partner"][i % 4] as User["role"],
+  role: ["user", "admin", "manager", "partner"][i % 4] as UserRole,
 }));
 
-const roleMap: Record<User["role"], string> = {
+const roleMap: Record<UserRole, string> = {
   user: "Пользователь",
   partner: "Партнёр",
   manager: "Менеджер",
-  admin: "Админ",
+  subadmin: "Админ",
 };
 
 export const userColumns = [

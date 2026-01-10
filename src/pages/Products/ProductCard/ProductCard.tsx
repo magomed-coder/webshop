@@ -4,11 +4,11 @@ import { IoPricetagOutline } from "react-icons/io5";
 import React from "react";
 import styles from "./ProductCard.module.css";
 import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
-import type { Product } from "@/types";
+import type { ProductDTO } from "@/types";
 import { formatPrice } from "@/lib/utils/formatters";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductDTO;
   onPress: () => void;
   isLoading: boolean;
 }
@@ -37,14 +37,14 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(
       <div className={styles.card} onClick={onPress}>
         <div className={styles.productImageWrapper}>
           <img
-            src={product.images[0]}
-            alt={product.name}
+            src={product.images[0].image}
+            alt={product.title}
             className={styles.productImage}
           />
         </div>
 
         <Paragraph variant="u500.15" className={styles.productName}>
-          {product.name}
+          {product.title}
         </Paragraph>
 
         <div className={styles.productMetaRow}>

@@ -201,7 +201,7 @@ const ProductDetailScreen = () => {
       <Sheet
         isOpen={isSheetOpen}
         onClose={() => setSheetOpen(false)}
-        snapPoints={[0.35, 0.5, 0.6, 0.7, 0.8, 0.9]}
+        snapPoints={[0.5, 0.6, 0.7, 0.8, 0.9]}
         initialSnap={1}
       >
         <Sheet.Container>

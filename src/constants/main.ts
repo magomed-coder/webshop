@@ -1,25 +1,43 @@
-export const BASE_URL = "https://fav-13.ru";
+export const BASE_URL = "https://shareandearn.tech";
+export const WEB_BASE_URL = "https://magomed-coder-webshop-9491.twc1.net";
 
 export const ENDPOINTS = {
   AUTH: {
-    LOGIN: "/api/token/",
     REGISTER: "/api/register/",
+    VERIFY_EMAIL: "/api/verify-email/",
+    RESEND_CODE: "/api/resend-code/",
+    LOGIN: "/api/login/",
+    REFRESH: "/api/refresh/",
+
+    // нет
     LOGOUT: "/api/logout/",
-    REFRESH: "/api/token/refresh/",
     ME: "/api/me/",
     CHANGE_EMAIL: "/api/change-email/", // смена email
     CHANGE_PASSWORD: "/api/change-password/", // смена пароля
   },
-  USERS: {
-    LIST: "/users/",
-    DETAIL: (id: number) => `/users/${id}/`,
-  },
-} as const;
 
-// export async function getUserDetail(id: number) {
-//   const resp = await api.get(API_ENDPOINTS.USERS.DETAIL(id));
-//   return resp.data;  // объект конкретного пользователя
-// }
+  CATALOG: {
+    CATEGORIES: "/api/categories/",
+    CATEGORY_DETAIL: (id: number) => `/api/categories/${id}/`,
+
+    PRODUCTS: "/api/products/",
+    PRODUCT_DETAIL: (id: number) => `/api/products/${id}/`,
+  },
+
+  REFERRALS: {
+    SHARE_LINKS: "/api/ref/share-links/",
+    SHARE_LINK_ORDERS: (id: number) => `/api/ref/share-links/${id}/orders/`,
+    ORDERS: "/api/ref/orders/",
+    PUBLIC_REDIRECT: (code: string) => `/api/ref/r/${code}/`,
+  },
+
+  ORDERS: {
+    CREATE: "/api/orders/",
+  },
+
+  // нет
+  APP_VERSION: "/api/app-version/",
+} as const;
 
 export const STORAGE_KEYS = {
   AUTH: {
