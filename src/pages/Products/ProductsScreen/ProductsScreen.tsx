@@ -11,13 +11,13 @@ import { getCategoryTitle } from "@/lib/utils/category.utils";
 import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
 import { fetchProductsByCategory } from "@/services/productService";
 import { LOCATIONS } from "@/constants/main";
-import type { CategoryName, FilterType, Product } from "@/types";
+import type { CategoryNameValue, FilterType, Product } from "@/types";
 import { ProductsHeader } from "../ProductsHeader/ProductsHeader";
 import { Container } from "@/components/shared/Container/Container";
 
 const ProductListScreen: React.FC = () => {
   const { categoryName } = useParams<{
-    categoryName: CategoryName;
+    categoryName: CategoryNameValue;
   }>();
   const navigate = useNavigate();
 
