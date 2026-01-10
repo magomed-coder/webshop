@@ -4,11 +4,11 @@
 //   );
 // };
 
-import { mockProducts } from "constants/data";
-import type { CategoryName, ReferralStats } from "types";
+import { mockProducts } from "@/constants/data";
+import type { CategoryNameValue, ReferralStats } from "@/types";
 
 export const fetchProductsByCategory = async (
-  category?: CategoryName
+  category?: CategoryNameValue
 ): Promise<any[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -30,7 +30,7 @@ export const fetchProductById = async (productId: number) => {
 };
 
 export const fetchPopularProducts = async (
-  category?: CategoryName
+  category?: CategoryNameValue
 ): Promise<any[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {

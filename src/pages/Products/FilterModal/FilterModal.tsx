@@ -1,11 +1,11 @@
 // src/components/products/FilterModal.tsx
 import React from "react";
 import styles from "./FilterModal.module.css";
-import { Paragraph } from "@components/UI/Paragraph/Paragraph";
-import { LOCATIONS } from "constants/main";
-import type { FilterType } from "types";
-import { Checkbox } from "@components/UI/Checkbox/Checkbox";
-import { RadioButton } from "@components/UI/RadioButton/RadioButton";
+import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
+import { LOCATIONS } from "@/constants/main";
+import type { FilterType } from "@/types";
+import { Checkbox } from "@/components/shared/Checkbox/Checkbox";
+import { RadioButton } from "@/components/shared/RadioButton/RadioButton";
 import { MdClose } from "react-icons/md";
 import { Sheet } from "react-modal-sheet";
 
@@ -54,28 +54,28 @@ const FilterModal: React.FC<FilterModalProps> = ({
     };
   }, [onClose]);
 
-  const [visible, setVisible] = React.useState(false);
-  const [animate, setAnimate] = React.useState(false);
+  // const [visible, setVisible] = React.useState(false);
+  // const [animate, setAnimate] = React.useState(false);
 
-  React.useEffect(() => {
-    if (isOpen) {
-      setVisible(true);
-      // Небольшая задержка для применения начальных стилей перед анимацией
-      requestAnimationFrame(() => {
-        setAnimate(true);
-      });
-    } else {
-      setAnimate(false);
-    }
-  }, [isOpen]);
+  // React.useEffect(() => {
+  //   if (isOpen) {
+  //     setVisible(true);
+  //     // Небольшая задержка для применения начальных стилей перед анимацией
+  //     requestAnimationFrame(() => {
+  //       setAnimate(true);
+  //     });
+  //   } else {
+  //     setAnimate(false);
+  //   }
+  // }, [isOpen]);
 
-  const handleTransitionEnd = () => {
-    if (!isOpen) {
-      setVisible(false);
-    }
-  };
+  // const handleTransitionEnd = () => {
+  //   if (!isOpen) {
+  //     setVisible(false);
+  //   }
+  // };
 
-  if (!visible) return null;
+  // if (!visible) return null;
 
   return (
     <Sheet

@@ -1,7 +1,7 @@
 // src/pages/NotFound/NotFound.tsx
+import { InfoScreen } from "@/components/shared/InfoScreen";
 import { MdErrorOutline, MdHome } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { InfoScreen } from "@components/UI/InfoScreen";
 
 export default function NotFound() {
   const navigate = useNavigate();

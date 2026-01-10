@@ -1,5 +1,5 @@
 // src/utils/authStorage.ts
-import { STORAGE_KEYS } from "constants/main";
+import { STORAGE_KEYS } from "@/constants/main";
 
 export const saveRefreshToken = (token: string) =>
   sessionStorage.setItem(STORAGE_KEYS.AUTH.REFRESH, token);

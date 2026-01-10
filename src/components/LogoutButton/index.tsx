@@ -2,8 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./LogoutButton.module.css";
-import { useAuthStore } from "contexts/useAuthStore";
 import { LuLogOut } from "react-icons/lu";
+import { useAuthStore } from "@/contexts/useAuthStore";
 
 interface LogoutButtonProps {
   className?: string;

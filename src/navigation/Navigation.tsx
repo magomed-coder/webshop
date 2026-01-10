@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineHome, AiFillAppstore } from "react-icons/ai";
 import { FiUser } from "react-icons/fi";
-import { useIsMobile } from "hooks/useIsMobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export function AppNavigation() {
   const location = useLocation();

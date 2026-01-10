@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import styles from "./AboutCompanyFooter.module.css";
-import { Paragraph } from "@components/UI/Paragraph/Paragraph";
+import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
 import { MdArrowForward, MdShare } from "react-icons/md";
 import { IoCashOutline, IoPeopleOutline } from "react-icons/io5";
 

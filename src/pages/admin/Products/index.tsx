@@ -1,3 +1,3 @@
-export default function Payments() {
-  return <div>Payments page</div>;
+export default function Products() {
+  return <div>Products page</div>;
 }

@@ -12,13 +12,13 @@ import { IoLockClosedOutline } from "react-icons/io5";
 import styles from "./Profile.module.css";
 // import { useAuthStore } from "@/contexts/authStore";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "contexts/useAuthStore";
+import { useAuthStore } from "@/contexts/useAuthStore";
 import {
   MdLogout,
   MdOutlineAccountBalanceWallet,
   MdOutlineAccountCircle,
 } from "react-icons/md";
-import { InfoScreen } from "@components/UI/InfoScreen";
+import { InfoScreen } from "@/components/shared/InfoScreen";
 
 interface SettingsItemProp {
   icon: React.ReactNode;

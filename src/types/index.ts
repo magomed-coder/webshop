@@ -1,15 +1,20 @@
 /**
  * Перечисление возможных идентификаторов категорий.
  */
-export enum CategoryName {
-  RealEstate = "real_estate",
-  AutoParts = "auto_parts",
-  BuildingMaterials = "building_materials",
-  PhonesAndComputers = "phones_and_computers",
-  Perfume = "perfume",
-  Furniture = "furniture",
-  SportsNutrition = "sports_nutrition",
-}
+export const CategoryName = {
+  RealEstate: "real_estate",
+  AutoParts: "auto_parts",
+  BuildingMaterials: "building_materials",
+  PhonesAndComputers: "phones_and_computers",
+  Perfume: "perfume",
+  Furniture: "furniture",
+  SportsNutrition: "sports_nutrition",
+} as const;
+
+export type CategoryName = keyof typeof CategoryName; // "RealEstate" | "AutoParts"
+// или
+export type CategoryNameValue =
+  (typeof CategoryName)[keyof typeof CategoryName];
 
 /**
  * Описание структуры категории.
@@ -17,7 +22,7 @@ export enum CategoryName {
 export interface Category {
   id: number;
   title: string;
-  name: CategoryName;
+  name: CategoryNameValue;
   image: string;
   color: string;
 }
@@ -34,7 +39,7 @@ export interface Product {
   referralUrl: string;
   referralBonus: number;
   extraBonus?: number;
-  category: CategoryName; // Категория товара, соответствует enum
+  category: CategoryNameValue; // Категория товара, соответствует enum
   inStock: boolean; // Наличие на складе
   isPromo: boolean;
 

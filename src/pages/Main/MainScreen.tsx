@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import styles from "./MainScreen.module.css";
-import { Container } from "@components/UI/Container/Container";
-import { Title } from "@components/UI/Title/Title";
+import { Container } from "@/components/shared/Container/Container";
+import { Title } from "@/components/shared/Title/Title";
 import { OfferCard } from "../Categories/OfferCard/OfferCard";
-import { CATEGORIES } from "constants/data";
+import { CATEGORIES } from "@/constants/data";
 import { ShowMoreCard } from "./ShowMoreCard/ShowMoreCard";
 import { AboutCompanyFooter } from "./AboutCompanyFooter/AboutCompanyFooter";
 

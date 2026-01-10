@@ -1,9 +1,9 @@
 import { OfferCard } from "../OfferCard/OfferCard";
 
 import styles from "./Categories.module.css";
-import { CATEGORIES } from "constants/data";
-import { Container } from "@components/UI/Container/Container";
-import { Title } from "@components/UI/Title/Title";
+import { CATEGORIES } from "@/constants/data";
+import { Container } from "@/components/shared/Container/Container";
+import { Title } from "@/components/shared/Title/Title";
 
 const Categories = () => {
   return (

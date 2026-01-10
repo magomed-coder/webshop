@@ -1,10 +1,10 @@
 import axios from "axios";
-import { BASE_URL, ENDPOINTS } from "constants/main";
+import { BASE_URL, ENDPOINTS } from "@/constants/main";
 import {
   getAccessToken,
   getRefreshToken,
   saveAuthTokens,
-} from "services/tokenStorage";
+} from "@/services/tokenStorage";
 
 const api = axios.create({
   baseURL: BASE_URL,

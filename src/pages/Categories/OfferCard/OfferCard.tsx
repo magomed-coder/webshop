@@ -1,10 +1,9 @@
 // src/components/categories/OfferCard.tsx
-
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import styles from "./OfferCard.module.css";
-import { Paragraph } from "@components/UI/Paragraph/Paragraph";
-import type { Category } from "types";
+import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
+import type { Category } from "@/types";
 
 interface OfferCardProps {
   item: Category;
