@@ -8,7 +8,7 @@ import { mockProducts } from "@/constants/data";
 import type { CategoryNameValue, ReferralStats } from "@/types";
 
 export const fetchProductsByCategory = async (
-  category?: CategoryNameValue
+  category?: string
 ): Promise<any[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {

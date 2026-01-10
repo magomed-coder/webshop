@@ -69,3 +69,86 @@ export interface ReferralStats {
   totalEarnings: number;
   images: string[];
 }
+
+// ===== Images =====
+export interface ImageDTO {
+  id: number;
+  image: string;
+  is_main: boolean;
+  position: number;
+}
+
+// ===== Categories =====
+export interface CategoryDTO {
+  id: number;
+  name: string;
+  slug: string;
+  images: ImageDTO[];
+}
+
+// ===== Products =====
+export interface ProductDTO {
+  id: number;
+  title: string;
+  description: string;
+  price: string; // деньги — строка
+  is_active: boolean;
+
+  bonus: string;
+  extra_bonus: string | null;
+  total_bonus: string;
+
+  category: number;
+  category_name: string;
+
+  images: ImageDTO[];
+  // нет
+  isPromo: boolean;
+}
+
+export interface CreateOrderDTO {
+  referral_code: string | null;
+  customer_name: string;
+  customer_phone: string;
+  comment?: string;
+}
+
+/** Ответ сервера после создания заказа */
+export interface OrderDTO {
+  id: number;
+  referral_code: string;
+  customer_name: string;
+  customer_phone: string;
+  comment?: string;
+  status: string;
+  created_at: string;
+}
+
+export interface ReferralLinkDTO {
+  id: number;
+  product_id: number;
+  referral_code: string;
+  status: string;
+  created_at: string;
+}
+
+/** Заказ, пришедший по реферальной ссылке */
+export interface ReferralOrderDTO {
+  id: number;
+  referral_code: string;
+  customer_name: string;
+  customer_phone: string;
+  status: string;
+  created_at: string;
+}
+
+/** Payload для создания реферальной ссылки */
+export interface CreateReferralLinkDTO {
+  product_id: number;
+}
+
+export interface PublicReferralRedirectDTO {
+  product_id: number;
+  product_title: string;
+  referral_code: string;
+}

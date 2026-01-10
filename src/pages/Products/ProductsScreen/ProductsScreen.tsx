@@ -9,21 +9,23 @@ import { ProductCard } from "../ProductCard/ProductCard";
 import { skeletonProducts } from "@/constants/data";
 import { getCategoryTitle } from "@/lib/utils/category.utils";
 import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
-import { fetchProductsByCategory } from "@/services/productService";
 import { LOCATIONS } from "@/constants/main";
-import type { CategoryNameValue, FilterType, Product } from "@/types";
+import type { FilterType, ProductDTO } from "@/types";
 import { ProductsHeader } from "../ProductsHeader/ProductsHeader";
 import { Container } from "@/components/shared/Container/Container";
+import { useCatalogStore } from "@/contexts/catalog.store";
+
+// categoryId: CategoryNameValue;
 
 const ProductListScreen: React.FC = () => {
-  const { categoryName } = useParams<{
-    categoryName: CategoryNameValue;
+  const { categoryId } = useParams<{
+    categoryId: string;
   }>();
   const navigate = useNavigate();
 
   /* ----------------------------- State & Refs ----------------------------- */
-  const [products, setProducts] = useState<Product[]>([]);
-  const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductDTO[]>([]);
+  const [visibleProducts, setVisibleProducts] = useState<ProductDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FilterType>({
     minPrice: "",
@@ -33,6 +35,8 @@ const ProductListScreen: React.FC = () => {
   });
   const [selectedLocations, setSelectedLocations] = useState<any[]>([]);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+  const { fetchProducts, products: Allproducts } = useCatalogStore();
 
   /* ----------------------------- Handlers ----------------------------- */
 
@@ -49,30 +53,38 @@ const ProductListScreen: React.FC = () => {
 
     if (filters.minPrice) {
       const min = parseFloat(filters.minPrice);
-      result = result.filter((p) => p.price >= min);
+      result = result.filter((p) => +p.price >= min);
     }
 
     if (filters.maxPrice) {
       const max = parseFloat(filters.maxPrice);
-      result = result.filter((p) => p.price <= max);
+      result = result.filter((p) => +p.price <= max);
     }
 
     if (filters.withExtraBonus) {
-      result = result.filter((p) => (p.extraBonus ?? 0) > 0);
+      result = result.filter((p) => toNumber(p.extra_bonus) > 0);
     }
 
     switch (filters.sortBy) {
       case "price_asc":
-        result.sort((a, b) => a.price - b.price);
+        result.sort(
+          (a, b) => toNumber(a.extra_bonus) - toNumber(b.extra_bonus)
+        );
         break;
       case "price_desc":
-        result.sort((a, b) => b.price - a.price);
+        result.sort(
+          (a, b) => toNumber(b.extra_bonus) - toNumber(a.extra_bonus)
+        );
         break;
       case "referral_desc":
-        result.sort((a, b) => (b.extraBonus ?? 0) - (a.extraBonus ?? 0));
+        result.sort(
+          (a, b) => toNumber(b.extra_bonus) - toNumber(a.extra_bonus)
+        );
         break;
       case "referral_asc":
-        result.sort((a, b) => (a.extraBonus ?? 0) - (b.extraBonus ?? 0));
+        result.sort(
+          (a, b) => toNumber(a.extra_bonus) - toNumber(b.extra_bonus)
+        );
         break;
       default:
         break;
@@ -94,7 +106,7 @@ const ProductListScreen: React.FC = () => {
 
   const openProduct = useCallback(
     (id: number) => {
-      navigate(`/products/${categoryName}/${id}`);
+      navigate(`/product/${id}`);
     },
     [navigate]
   );
@@ -114,21 +126,50 @@ const ProductListScreen: React.FC = () => {
 
   /* ----------------------------- Effect on data load ----------------------------- */
 
-  useEffect(() => {
-    if (!categoryName) return;
+  // useEffect(() => {
+  //   if (!categoryId) return;
 
-    setIsLoading(true);
-    fetchProductsByCategory(categoryName).then((data) => {
-      setProducts(data);
-      setVisibleProducts(data);
+  //   setIsLoading(true);
+  //   fetchProductsByCategory(categoryId).then((data) => {
+  //     setProducts(data);
+  //     setVisibleProducts(data);
+  //     setIsLoading(false);
+  //   });
+  // }, [categoryId]);
+
+  useEffect(() => {
+    const loadAndFilter = async () => {
+      let allProducts = Allproducts;
+
+      // если продуктов ещё нет в сторе → загружаем
+      if (allProducts.length === 0) {
+        setIsLoading(true);
+        try {
+          allProducts = await fetchProducts();
+          // Здесь можно сразу сохранить в стор, если нужно
+        } catch (err) {
+          console.log("[fetchProducts error]", err);
+        }
+      }
+
+      // Фильтруем по текущей категории
+      const filtered = allProducts.filter(
+        (p) => p.category === Number(categoryId)
+      );
+
+      setProducts(filtered);
+      setVisibleProducts(filtered);
       setIsLoading(false);
-    });
-  }, [categoryName]);
+    };
+
+    loadAndFilter();
+
+    return () => {};
+  }, [categoryId]);
 
   /* ----------------------------- Render states ----------------------------- */
 
-  const categoryTitle = getCategoryTitle(categoryName || "") || "Категория";
-  console.log(categoryName, categoryTitle);
+  const categoryTitle = getCategoryTitle(categoryId || "") || "Категория";
 
   if (!products.length && !isLoading) {
     return (
@@ -190,3 +231,5 @@ const ProductListScreen: React.FC = () => {
 };
 
 export default ProductListScreen;
+
+const toNumber = (value: string | null): number => (value ? Number(value) : 0);

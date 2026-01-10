@@ -1,6 +1,6 @@
 // ProductDetailScreen.tsx
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styles from "./ProductDetailScreen.module.css";
 
 import {
@@ -12,9 +12,7 @@ import {
   IoClose,
 } from "react-icons/io5";
 import { MdCategory, MdInventory } from "react-icons/md";
-import type { Product } from "@/types";
-import { mockProducts } from "@/constants/data";
-import { getCategoryTitle } from "@/lib/utils/category.utils";
+
 import { formatPrice } from "@/lib/utils/formatters";
 import ImageSwiper from "@/components/ImageSwiper/ImageSwiper";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -24,32 +22,64 @@ import { Sheet } from "react-modal-sheet";
 import { Input } from "@/components/shared/Input";
 import { useReferral } from "@/hooks/useReferral";
 import { Button } from "@/components/shared/Button";
+import { useCatalogStore } from "@/contexts/catalog.store";
+import { useAuthStore } from "@/contexts/auth.store";
+import { useOrderStore } from "@/contexts/order.store";
 
 const CONTACT_PHONE_KEY = "contact_phone";
 
 const ProductDetailScreen = () => {
-  const { id } = useParams<{ id: string }>();
-  // const location = useLocation();
+  // const { referralCode, productId } = useParams<{
+  //   referralCode: string;
+  //   productId: string;
+  // }>();
 
-  // Безопасно извлекаем state
-  // const { code: referralCode, clear } = useReferral();
+  const location = useLocation();
+  const { productId, referralCode } = location.state;
+
+  console.log({ productId, referralCode });
+
+  const navigate = useNavigate();
+
+  const { user } = useAuthStore();
   const { clear } = useReferral();
+
+  const { products, currentProduct, fetchProduct, clearCurrentProduct } =
+    useCatalogStore();
+  const { createOrder } = useOrderStore();
 
   const isMobile = useIsMobile();
 
-  const [product, setProduct] = useState<Product | null>(null);
   const [phone, setPhone] = useState("");
-
   const [isSheetOpen, setSheetOpen] = useState(false);
   const [error, setError] = useState<string | undefined>();
   const [isSent, setIsSent] = useState(false);
 
   useEffect(() => {
-    // Находим продукт по ID
-    const allProducts = Object.values(mockProducts).flat();
-    const foundProduct = allProducts.find((p) => p.id === parseInt(id || ""));
-    setProduct(foundProduct || null);
-  }, [id]);
+    if (!productId) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    const prodId = Number(productId);
+
+    // 1. Пытаемся найти в уже загруженных продуктах
+    const cachedProduct = products.find((p) => p.id === prodId);
+
+    if (cachedProduct) {
+      // продукт уже есть — используем его
+      useCatalogStore.setState({ currentProduct: cachedProduct });
+      return;
+    }
+
+    // 2. Если нет — делаем запрос
+    fetchProduct(prodId);
+
+    // 3. cleanup
+    return () => {
+      clearCurrentProduct();
+    };
+  }, [productId, products]);
 
   useEffect(() => {
     const savedPhone = localStorage.getItem("contact_phone");
@@ -71,7 +101,7 @@ const ProductDetailScreen = () => {
   };
 
   const handleContact = async () => {
-    if (!product) return;
+    if (!currentProduct) return;
 
     setIsSent(false);
     setSheetOpen(true);
@@ -102,22 +132,23 @@ const ProductDetailScreen = () => {
     }, 2500);
   };
 
-  if (!product) {
+  if (!currentProduct) {
     return <div className={styles.loading}>Загрузка...</div>;
   }
 
-  const categoryTitle = getCategoryTitle(product.category);
+  const categoryTitle = currentProduct.category_name;
+  const images = currentProduct.images.map((img) => img.image);
 
   return (
     <>
       <div className={styles.productDetailContainer}>
         <BackButton />
         <div className={styles.contentWrapper}>
-          <ImageSwiper data={product.images} showArrows={!isMobile} />
+          <ImageSwiper data={images} showArrows={!isMobile} />
 
           <div className={styles.productContent}>
             <div className={styles.productInfoSection}>
-              <h1 className={styles.productName}>{product.name}</h1>
+              <h1 className={styles.productName}>{currentProduct.title}</h1>
 
               <div className={styles.pricingContainer}>
                 <div className={styles.priceBlock}>
@@ -126,7 +157,7 @@ const ProductDetailScreen = () => {
                     <span className={styles.priceLabel}>Цена</span>
                   </div>
                   <div className={styles.priceValue}>
-                    {formatPrice(product.price)}₽
+                    {formatPrice(currentProduct.price)}₽
                   </div>
                 </div>
               </div>
@@ -137,7 +168,9 @@ const ProductDetailScreen = () => {
                 <IoDocumentTextOutline size={20} />
                 <h2 className={styles.sectionTitleText}>Описание</h2>
               </div>
-              <p className={styles.productDescription}>{product.description}</p>
+              <p className={styles.productDescription}>
+                {currentProduct.description}
+              </p>
             </div>
 
             <div className={styles.productDetailsSection}>
@@ -169,19 +202,19 @@ const ProductDetailScreen = () => {
                   </div>
                   <div
                     className={`${styles.stockBadge} ${
-                      product.inStock
+                      currentProduct.is_active
                         ? styles.inStockBadge
                         : styles.outOfStockBadge
                     }`}
                   >
                     <span
                       className={`${styles.stockText} ${
-                        product.inStock
+                        currentProduct.is_active
                           ? styles.inStockText
                           : styles.outOfStockText
                       }`}
                     >
-                      {product.inStock ? "В наличии" : "Нет в наличии"}
+                      {currentProduct.is_active ? "В наличии" : "Нет в наличии"}
                     </span>
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 import { ReferralService } from "@/services/referral.service";
 import type {
   CreateReferralLinkDTO,
+  PublicReferralRedirectDTO,
   ReferralLinkDTO,
   ReferralOrderDTO,
 } from "@/types";
@@ -27,6 +28,16 @@ interface ReferralState {
   fetchOrdersByLink: (id: number) => Promise<void>;
   /** Очистка заказов по ссылке */
   clearOrdersByLink: () => void;
+  /** Данные публичного перехода по реф-коду */
+  publicRedirectData: PublicReferralRedirectDTO | null;
+  /** Загрузка публичного перехода */
+  isPublicRedirectLoading: boolean;
+  /** Ошибка публичного перехода */
+  publicRedirectError: string | null;
+  /** Публичный переход по реф-коду */
+  fetchPublicRedirect: (code: string) => Promise<PublicReferralRedirectDTO>;
+  /** Очистка публичного редиректа */
+  clearPublicRedirect: () => void;
 }
 
 export const useReferralStore = create<ReferralState>((set) => ({
@@ -36,6 +47,10 @@ export const useReferralStore = create<ReferralState>((set) => ({
 
   isLoading: false,
   error: null,
+
+  publicRedirectData: null,
+  isPublicRedirectLoading: false,
+  publicRedirectError: null,
 
   /**
    * Загружает список всех реферальных ссылок пользователя.
@@ -138,4 +153,37 @@ export const useReferralStore = create<ReferralState>((set) => ({
    * Обычно вызывается при выходе со страницы деталей.
    */
   clearOrdersByLink: () => set({ ordersByLink: [] }),
+
+  fetchPublicRedirect: async (code: string) => {
+    set({
+      isPublicRedirectLoading: true,
+      publicRedirectError: null,
+    });
+
+    try {
+      const res = await ReferralService.publicRedirect(code);
+
+      set({
+        publicRedirectData: res.data,
+      });
+
+      return res.data;
+    } catch (err: any) {
+      set({
+        publicRedirectError:
+          err.response?.data?.detail ?? "Failed to resolve referral link",
+      });
+      throw err;
+    } finally {
+      set({
+        isPublicRedirectLoading: false,
+      });
+    }
+  },
+
+  clearPublicRedirect: () =>
+    set({
+      publicRedirectData: null,
+      publicRedirectError: null,
+    }),
 }));
