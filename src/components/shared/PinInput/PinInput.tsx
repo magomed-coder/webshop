@@ -264,7 +264,11 @@ const PinInput = forwardRef<PinInputHandle, PinInputProps>(
         {values.map((value, index) => (
           <input
             key={index}
-            ref={(el) => el && (inputsRef.current[index] = el)}
+            ref={(el) => {
+              if (el) {
+                inputsRef.current[index] = el;
+              }
+            }}
             value={secret ? maskedValues[index] : value}
             onChange={(e) => handleChange(index, e.target.value)}
             onKeyDown={(e) => handleKeyDown(index, e)}

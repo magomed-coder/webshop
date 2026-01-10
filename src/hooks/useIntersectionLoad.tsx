@@ -1,4 +1,4 @@
-import { useEffect, useCallback, MutableRefObject, useRef } from "react";
+import { useEffect, useCallback, type MutableRefObject, useRef } from "react";
 
 interface UseIntersectionLoadProps {
   targetRef: MutableRefObject<HTMLDivElement | null>;

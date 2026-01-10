@@ -1,6 +1,6 @@
 // ProductDetailScreen.tsx
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./ProductDetailScreen.module.css";
 
 import {
@@ -32,7 +32,8 @@ const ProductDetailScreen = () => {
   // const location = useLocation();
 
   // Безопасно извлекаем state
-  const { code: referralCode, clear } = useReferral();
+  // const { code: referralCode, clear } = useReferral();
+  const { clear } = useReferral();
 
   const isMobile = useIsMobile();
 

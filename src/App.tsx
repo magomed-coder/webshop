@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import ProductRedirect from "./pages/ProductRedirect";
-import Invite from "./pages/Invite";
 import Categories from "./pages/Categories/CategoriesScreen/Categories";
 import Profile from "./pages/Profile/Profile";
 import Product from "./pages/Product/Product";
@@ -33,7 +32,7 @@ function App() {
         <Route path="/products/:categoryName/:id" element={<Product />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/categories" element={<Categories />} />
-        <Route path="/invite/:referralCode" element={<Invite />} />
+        {/* <Route path="/invite/:referralCode" element={<Invite />} /> */}
         <Route path="/link/:referralCode" element={<ProductRedirect />} />
 
         {/* 🔐 Только для ADMIN */}

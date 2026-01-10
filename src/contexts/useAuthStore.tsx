@@ -7,19 +7,22 @@ import {
 } from "@/services/tokenStorage";
 import { create } from "zustand";
 
-export enum UserRole {
-  USER = "user",
-  PARTNER = "partner",
-  MANAGER = "manager",
-  ADMIN = "admin",
-}
+export const UserRole = {
+  USER: "user",
+  PARTNER: "partner",
+  MANAGER: "manager",
+  ADMIN: "admin",
+} as const;
+
+export type UserRole = keyof typeof UserRole;
+export type UserRoleValue = (typeof UserRole)[UserRole];
 
 export interface User {
   id: number;
   username: string;
   email: string;
   phone: string | null;
-  role: UserRole;
+  role: UserRoleValue;
 }
 
 interface AuthState {

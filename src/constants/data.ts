@@ -7,7 +7,12 @@ import furniture_1_sofa from "@/assets/images/furniture_1_sofa.png";
 import perfume_2 from "@/assets/images/perfume_2.png";
 
 import sports_nutrition from "@/assets/images/sports_nutrition.png";
-import { CategoryName, type Category, type Product } from "@/types";
+import {
+  CategoryName,
+  type Category,
+  type CategoryNameValue,
+  type Product,
+} from "@/types";
 
 export const images = {
   building_3,
@@ -132,7 +137,7 @@ export const PORDUCTS_IMGS = [
  */
 function generateMockProducts(categoryKey: number): Product[] {
   // Определяем категорию по ключу
-  const categoryValues = Object.values(CategoryName) as CategoryName[];
+  const categoryValues = Object.values(CategoryName) as CategoryNameValue[];
   const category = categoryValues[categoryKey - 1];
 
   return Array.from({ length: 30 }, (_, idx) => {
@@ -188,7 +193,7 @@ function generateMockProducts(categoryKey: number): Product[] {
 /**
  * Словарь продуктов по категории (30 товаров в каждой).
  */
-export const mockProducts: Record<CategoryName, Product[]> = {
+export const mockProducts: Record<CategoryNameValue, Product[]> = {
   [CategoryName.RealEstate]: generateMockProducts(1),
   [CategoryName.AutoParts]: generateMockProducts(2),
   [CategoryName.BuildingMaterials]: generateMockProducts(3),

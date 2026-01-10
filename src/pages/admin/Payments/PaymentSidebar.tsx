@@ -80,7 +80,7 @@ export function PaymentSidebar({ payment, onClose }: PaymentSidebarProps) {
             <PaymentInfoSection payment={payment!} />
 
             {/* Действия */}
-            <PaymentActionsSection onClose={onClose} />
+            <PaymentActionsSection />
           </div>
         </div>
       </div>
@@ -145,7 +145,7 @@ function PaymentInfoSection({ payment }: { payment: Payment }) {
   );
 }
 
-function PaymentActionsSection({ onClose }: { onClose: () => void }) {
+function PaymentActionsSection() {
   return (
     <div className="space-y-3 pt-4 border-t border-gray-200">
       <button className="w-full flex items-center justify-between p-3 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group border border-gray-200">

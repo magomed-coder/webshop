@@ -1,5 +1,5 @@
 import { DataTable } from "@/components/ui/DataTable";
-import type { ColumnDef, Row } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import {
   FiUser,

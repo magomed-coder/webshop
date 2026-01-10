@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import styles from "./Sidebar.module.css";
 
@@ -16,7 +16,7 @@ import { LogoutButton } from "../LogoutButton";
 import { FiShoppingBag } from "react-icons/fi";
 
 export const Sidebar = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const currentUser = useAuthStore((state) => state.user);
 
   // Меню для обычных пользователей

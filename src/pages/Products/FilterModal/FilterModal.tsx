@@ -54,28 +54,28 @@ const FilterModal: React.FC<FilterModalProps> = ({
     };
   }, [onClose]);
 
-  const [visible, setVisible] = React.useState(false);
-  const [animate, setAnimate] = React.useState(false);
+  // const [visible, setVisible] = React.useState(false);
+  // const [animate, setAnimate] = React.useState(false);
 
-  React.useEffect(() => {
-    if (isOpen) {
-      setVisible(true);
-      // Небольшая задержка для применения начальных стилей перед анимацией
-      requestAnimationFrame(() => {
-        setAnimate(true);
-      });
-    } else {
-      setAnimate(false);
-    }
-  }, [isOpen]);
+  // React.useEffect(() => {
+  //   if (isOpen) {
+  //     setVisible(true);
+  //     // Небольшая задержка для применения начальных стилей перед анимацией
+  //     requestAnimationFrame(() => {
+  //       setAnimate(true);
+  //     });
+  //   } else {
+  //     setAnimate(false);
+  //   }
+  // }, [isOpen]);
 
-  const handleTransitionEnd = () => {
-    if (!isOpen) {
-      setVisible(false);
-    }
-  };
+  // const handleTransitionEnd = () => {
+  //   if (!isOpen) {
+  //     setVisible(false);
+  //   }
+  // };
 
-  if (!visible) return null;
+  // if (!visible) return null;
 
   return (
     <Sheet
