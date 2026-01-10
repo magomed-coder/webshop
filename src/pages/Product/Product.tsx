@@ -1,6 +1,6 @@
 // ProductDetailScreen.tsx
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./ProductDetailScreen.module.css";
 
 import {
@@ -23,8 +23,8 @@ import { Input } from "@/components/shared/Input";
 import { useReferral } from "@/hooks/useReferral";
 import { Button } from "@/components/shared/Button";
 import { useCatalogStore } from "@/contexts/catalog.store";
-import { useAuthStore } from "@/contexts/auth.store";
-import { useOrderStore } from "@/contexts/order.store";
+// import { useAuthStore } from "@/contexts/auth.store";
+// import { useOrderStore } from "@/contexts/order.store";
 
 const CONTACT_PHONE_KEY = "contact_phone";
 
@@ -41,12 +41,12 @@ const ProductDetailScreen = () => {
 
   const navigate = useNavigate();
 
-  const { user } = useAuthStore();
+  // const { user } = useAuthStore();
+  // const { createOrder } = useOrderStore();
   const { clear } = useReferral();
 
   const { products, currentProduct, fetchProduct, clearCurrentProduct } =
     useCatalogStore();
-  const { createOrder } = useOrderStore();
 
   const isMobile = useIsMobile();
 
