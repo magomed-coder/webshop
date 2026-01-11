@@ -25,8 +25,6 @@ import { Button } from "@/components/shared/Button";
 import { useCatalogStore } from "@/contexts/catalog.store";
 import type { CreateOrderDTO } from "@/types";
 import { useOrderStore } from "@/contexts/order.store";
-// import { useAuthStore } from "@/contexts/auth.store";
-// import { useOrderStore } from "@/contexts/order.store";
 
 const CONTACT_PHONE_KEY = "contact_phone";
 
@@ -43,8 +41,6 @@ const ProductDetailScreen = () => {
 
   const navigate = useNavigate();
 
-  // const { user } = useAuthStore();
-  // const { createOrder } = useOrderStore();
   const { clear } = useReferral();
 
   const { products, currentProduct, fetchProduct, clearCurrentProduct } =
@@ -54,18 +50,17 @@ const ProductDetailScreen = () => {
 
   const isMobile = useIsMobile();
 
-  const [phone, setPhone] = useState("");
   const [isSheetOpen, setSheetOpen] = useState(false);
-  const [error, setError] = useState<string | undefined>();
   const [isSent, setIsSent] = useState(false);
 
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [comment, setComment] = useState("");
+  const [error, setError] = useState<string | undefined>();
 
   const handleSubmitOrder = async () => {
     const payload: CreateOrderDTO = {
-      referral_code: null, // если будет реферальная система — потом подставим
+      referral_code: referralCode,
       customer_name: customerName.trim(),
       customer_phone: customerPhone.trim(),
       comment: comment.trim(),
@@ -73,55 +68,56 @@ const ProductDetailScreen = () => {
 
     // Минимальная валидация на фронте
     if (!payload.customer_name) {
-      // Alert.alert("Ошибка", "Укажите имя");
+      alert("Укажите корректно имя");
       return;
     }
     if (!payload.customer_phone || payload.customer_phone.length < 10) {
-      // Alert.alert("Ошибка", "Укажите корректный номер телефона");
+      alert("Укажите корректный номер телефона");
       return;
     }
 
     try {
       await createOrder(payload);
-      // closePurchaseSheet();
 
-      // alert(
-      //   "Заявка успешно отправлена!",
-      //   "Мы свяжемся с вами в ближайшее время."
-      // );
+      localStorage.setItem(CONTACT_PHONE_KEY, payload.customer_phone.trim());
+
+      setTimeout(() => {
+        setSheetOpen(false);
+        setIsSent(false);
+        setCustomerName("");
+        setCustomerPhone("");
+        setComment("");
+      }, 2500);
     } catch (error: any) {
       const errorMessage =
         error.response?.data?.detail ||
         error.response?.data?.message ||
         "Не удалось отправить заявку. Попробуйте позже.";
 
-      // Alert.alert("Ошибка", errorMessage);
+      alert(errorMessage);
     }
   };
 
-  const handleSubmit = () => {
-    if (!phone.trim()) {
-      setError("Введите номер телефона");
-      return;
-    }
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomerName(e.target.value);
+    setError(undefined);
+  };
 
-    // const payload = {
-    //   phone: phone,
-    //   productId: product.id,
-    //   category: product.category,
-    //   referralCode: referralCode || null,
-    // };
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomerPhone(e.target.value);
+    setError(undefined);
+  };
 
-    // Здесь можно добавить логику отправки / связи
-    setIsSent(true);
-    localStorage.setItem(CONTACT_PHONE_KEY, phone.trim());
+  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value);
+    setError(undefined);
+  };
 
-    // TODO: АПИ запрос на заказ
-    setTimeout(() => {
-      setSheetOpen(false);
-      setIsSent(false);
-      setPhone("");
-    }, 2500);
+  const handleContact = async () => {
+    if (!currentProduct) return;
+
+    setIsSent(false);
+    setSheetOpen(true);
   };
 
   useEffect(() => {
@@ -162,19 +158,6 @@ const ProductDetailScreen = () => {
       clear();
     };
   }, []);
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPhone(value);
-    setError(undefined);
-  };
-
-  const handleContact = async () => {
-    if (!currentProduct) return;
-
-    setIsSent(false);
-    setSheetOpen(true);
-  };
 
   if (!currentProduct) {
     return <div className={styles.loading}>Загрузка...</div>;
@@ -302,24 +285,26 @@ const ProductDetailScreen = () => {
                   <Input
                     label="Имя"
                     placeholder="Джон Доу"
-                    value={phone}
-                    onChange={handlePhoneChange}
+                    value={customerName}
+                    onChange={handleNameChange}
                     error={error}
                     inputClassName={styles.phoneInput}
                   />
+
                   <Input
                     label="Ваш телефон (желательно привязанный к WhatsApp)"
                     placeholder="+7 (000) 000-00-00"
-                    value={phone}
+                    value={customerPhone}
                     onChange={handlePhoneChange}
                     error={error}
                     inputClassName={styles.phoneInput}
                   />
+
                   <Input
                     label="Комментарий к заказу"
-                    value={phone}
-                    onChange={handlePhoneChange}
-                    error={error}
+                    placeholder="Например: интересует доставка"
+                    value={comment}
+                    onChange={handleCommentChange}
                     inputClassName={styles.phoneInput}
                   />
 
