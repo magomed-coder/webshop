@@ -149,7 +149,7 @@ const ProductDetailScreen = () => {
   useEffect(() => {
     const savedPhone = localStorage.getItem("contact_phone");
     if (savedPhone) {
-      setPhone(savedPhone);
+      setCustomerPhone(savedPhone);
     }
   }, []);
 
