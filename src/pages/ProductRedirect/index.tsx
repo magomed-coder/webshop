@@ -31,7 +31,7 @@ const ProductRedirect = () => {
 
         // Переходим с передачей state
         navigate(`/product/${res.product_id}`, {
-          state: { referralCode: res.referral_code, productId: res.product_id },
+          state: { referralCode: res.referral_code },
           replace: true, // чтобы не оставалось в истории
         });
       } catch (err) {

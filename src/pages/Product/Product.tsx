@@ -1,15 +1,15 @@
 // ProductDetailScreen.tsx
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styles from "./ProductDetailScreen.module.css";
 
 import {
   IoPricetagOutline,
   IoDocumentTextOutline,
   IoInformationCircleOutline,
-  IoMailOutline,
   IoCheckmarkCircleOutline,
   IoClose,
+  IoCartOutline,
 } from "react-icons/io5";
 import { MdCategory, MdInventory } from "react-icons/md";
 
@@ -29,15 +29,12 @@ import { useOrderStore } from "@/contexts/order.store";
 const CONTACT_PHONE_KEY = "contact_phone";
 
 const ProductDetailScreen = () => {
-  // const { referralCode, productId } = useParams<{
-  //   referralCode: string;
-  //   productId: string;
-  // }>();
+  const { productId } = useParams<{
+    productId: string;
+  }>();
 
   const location = useLocation();
-  const { productId, referralCode } = location.state;
-
-  console.log({ productId, referralCode });
+  const referralCode = location.state?.referralCode as string | undefined;
 
   const navigate = useNavigate();
 
@@ -60,7 +57,7 @@ const ProductDetailScreen = () => {
 
   const handleSubmitOrder = async () => {
     const payload: CreateOrderDTO = {
-      referral_code: referralCode,
+      referral_code: referralCode ?? null,
       customer_name: customerName.trim(),
       customer_phone: customerPhone.trim(),
       comment: comment.trim(),
@@ -250,8 +247,8 @@ const ProductDetailScreen = () => {
           </div>
         </div>
         <Button
-          icon={<IoMailOutline size={20} />}
-          label="Связаться"
+          icon={<IoCartOutline size={20} />}
+          label="Оформить покупку"
           onClick={handleContact}
           className={styles.shareActionButton}
         />

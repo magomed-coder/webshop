@@ -29,7 +29,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/products/:categoryId" element={<ProductsScreen />} />
-        <Route path="/product/:id" element={<Product />} />
+        <Route path="/product/:productId" element={<Product />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
         {/* <Route path="/invite/:referralCode" element={<Invite />} /> */}
