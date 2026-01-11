@@ -23,6 +23,8 @@ import { Input } from "@/components/shared/Input";
 import { useReferral } from "@/hooks/useReferral";
 import { Button } from "@/components/shared/Button";
 import { useCatalogStore } from "@/contexts/catalog.store";
+import type { CreateOrderDTO } from "@/types";
+import { useOrderStore } from "@/contexts/order.store";
 // import { useAuthStore } from "@/contexts/auth.store";
 // import { useOrderStore } from "@/contexts/order.store";
 
@@ -48,12 +50,79 @@ const ProductDetailScreen = () => {
   const { products, currentProduct, fetchProduct, clearCurrentProduct } =
     useCatalogStore();
 
+  const { createOrder } = useOrderStore();
+
   const isMobile = useIsMobile();
 
   const [phone, setPhone] = useState("");
   const [isSheetOpen, setSheetOpen] = useState(false);
   const [error, setError] = useState<string | undefined>();
   const [isSent, setIsSent] = useState(false);
+
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [comment, setComment] = useState("");
+
+  const handleSubmitOrder = async () => {
+    const payload: CreateOrderDTO = {
+      referral_code: null, // если будет реферальная система — потом подставим
+      customer_name: customerName.trim(),
+      customer_phone: customerPhone.trim(),
+      comment: comment.trim(),
+    };
+
+    // Минимальная валидация на фронте
+    if (!payload.customer_name) {
+      // Alert.alert("Ошибка", "Укажите имя");
+      return;
+    }
+    if (!payload.customer_phone || payload.customer_phone.length < 10) {
+      // Alert.alert("Ошибка", "Укажите корректный номер телефона");
+      return;
+    }
+
+    try {
+      await createOrder(payload);
+      // closePurchaseSheet();
+
+      // alert(
+      //   "Заявка успешно отправлена!",
+      //   "Мы свяжемся с вами в ближайшее время."
+      // );
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.detail ||
+        error.response?.data?.message ||
+        "Не удалось отправить заявку. Попробуйте позже.";
+
+      // Alert.alert("Ошибка", errorMessage);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (!phone.trim()) {
+      setError("Введите номер телефона");
+      return;
+    }
+
+    // const payload = {
+    //   phone: phone,
+    //   productId: product.id,
+    //   category: product.category,
+    //   referralCode: referralCode || null,
+    // };
+
+    // Здесь можно добавить логику отправки / связи
+    setIsSent(true);
+    localStorage.setItem(CONTACT_PHONE_KEY, phone.trim());
+
+    // TODO: АПИ запрос на заказ
+    setTimeout(() => {
+      setSheetOpen(false);
+      setIsSent(false);
+      setPhone("");
+    }, 2500);
+  };
 
   useEffect(() => {
     if (!productId) {
@@ -105,31 +174,6 @@ const ProductDetailScreen = () => {
 
     setIsSent(false);
     setSheetOpen(true);
-  };
-
-  const handleSubmit = () => {
-    if (!phone.trim()) {
-      setError("Введите номер телефона");
-      return;
-    }
-
-    // const payload = {
-    //   phone: phone,
-    //   productId: product.id,
-    //   category: product.category,
-    //   referralCode: referralCode || null,
-    // };
-
-    // Здесь можно добавить логику отправки / связи
-    setIsSent(true);
-    localStorage.setItem(CONTACT_PHONE_KEY, phone.trim());
-
-    // TODO: АПИ запрос на заказ
-    setTimeout(() => {
-      setSheetOpen(false);
-      setIsSent(false);
-      setPhone("");
-    }, 2500);
   };
 
   if (!currentProduct) {
@@ -234,8 +278,8 @@ const ProductDetailScreen = () => {
       <Sheet
         isOpen={isSheetOpen}
         onClose={() => setSheetOpen(false)}
-        snapPoints={[0.5, 0.6, 0.7, 0.8, 0.9]}
-        initialSnap={1}
+        snapPoints={[0, 0.8, 0.9, 1]}
+        initialSnap={3}
       >
         <Sheet.Container>
           <Sheet.Header>
@@ -256,8 +300,23 @@ const ProductDetailScreen = () => {
               {!isSent ? (
                 <>
                   <Input
+                    label="Имя"
+                    placeholder="Джон Доу"
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    error={error}
+                    inputClassName={styles.phoneInput}
+                  />
+                  <Input
                     label="Ваш телефон (желательно привязанный к WhatsApp)"
-                    placeholder="+7 (___) ___-__-__"
+                    placeholder="+7 (000) 000-00-00"
+                    value={phone}
+                    onChange={handlePhoneChange}
+                    error={error}
+                    inputClassName={styles.phoneInput}
+                  />
+                  <Input
+                    label="Комментарий к заказу"
                     value={phone}
                     onChange={handlePhoneChange}
                     error={error}
@@ -266,7 +325,7 @@ const ProductDetailScreen = () => {
 
                   <Button
                     label="Отправить заявку"
-                    onClick={handleSubmit}
+                    onClick={handleSubmitOrder}
                     className={styles.submitButton}
                   />
                 </>
