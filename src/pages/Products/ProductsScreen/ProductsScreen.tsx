@@ -126,17 +126,6 @@ const ProductListScreen: React.FC = () => {
 
   /* ----------------------------- Effect on data load ----------------------------- */
 
-  // useEffect(() => {
-  //   if (!categoryId) return;
-
-  //   setIsLoading(true);
-  //   fetchProductsByCategory(categoryId).then((data) => {
-  //     setProducts(data);
-  //     setVisibleProducts(data);
-  //     setIsLoading(false);
-  //   });
-  // }, [categoryId]);
-
   useEffect(() => {
     const loadAndFilter = async () => {
       let allProducts = Allproducts;

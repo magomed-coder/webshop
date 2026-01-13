@@ -19,7 +19,7 @@ export const OfferCard: React.FC<OfferCardProps> = ({ item }) => {
   return (
     <div
       className={styles.offerCard}
-      // style={{ backgroundColor: item.color }}
+      style={{ backgroundColor: item.backgroundColor }}
       onClick={handleClick}
     >
       <div className={styles.imageContainer}>

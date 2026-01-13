@@ -83,6 +83,7 @@ export interface CategoryDTO {
   id: number;
   name: string;
   slug: string;
+  backgroundColor: string;
   images: ImageDTO[];
 }
 
