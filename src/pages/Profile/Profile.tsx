@@ -20,8 +20,9 @@ import {
 import { InfoScreen } from "@/components/shared/InfoScreen";
 import { useAuthStore } from "@/contexts/auth.store";
 import ConfirmModal from "@/components/shared/ConfirmModal/ConfirmModal";
-import { detectPlatform } from "@/lib/utils/detectPlatform";
 import { APP_STORE_URL, GOOGLE_PLAY_URL } from "@/constants/main";
+import { getMobileOS } from "@/lib/utils/getMobileOS";
+import { FaApple, FaGooglePlay } from "react-icons/fa";
 
 interface SettingsItemProp {
   icon: React.ReactNode;
@@ -56,6 +57,25 @@ const SettingsItem: React.FC<SettingsItemProp> = ({
   </div>
 );
 
+const StoreButton: React.FC<{ platform: "ios" | "android" }> = ({
+  platform,
+}) => {
+  const url = platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL;
+  const Icon = platform === "ios" ? FaApple : FaGooglePlay;
+  const label = platform === "ios" ? "App Store" : "Google Play";
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ display: "flex", alignItems: "center", gap: 6, color: "#fff" }}
+    >
+      <Icon size={20} /> {label}
+    </a>
+  );
+};
+
 const Profile: React.FC = () => {
   const { isAuth } = useAuthStore();
   const navigate = useNavigate();
@@ -65,12 +85,14 @@ const Profile: React.FC = () => {
   const openAuthUnavailableModal = () => {
     setAuthUnavailableModalOpen(true);
   };
-  const platform = detectPlatform();
+  const platform = getMobileOS();
 
   const closeAuthUnavailableModal = () => {
-    const storeUrl = platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL;
-    window.open(storeUrl, "_blank");
+    setAuthUnavailableModalOpen(false);
+  };
 
+  const сonfirmAuthUnavailableModal = () => {
+    window.open(platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL, "_blank");
     setAuthUnavailableModalOpen(false);
   };
 
@@ -91,12 +113,10 @@ const Profile: React.FC = () => {
         <ConfirmModal
           isOpen={isAuthUnavailableModalOpen}
           onClose={closeAuthUnavailableModal}
-          onConfirm={closeAuthUnavailableModal}
+          onConfirm={сonfirmAuthUnavailableModal}
           title="Вход недоступен в веб-версии"
-          description="Полный доступ к профилю и авторизация сейчас доступны только в мобильном приложении."
-          confirmText={
-            platform === "ios" ? "Скачать в App Store" : "Скачать в Google Play"
-          }
+          description="Полный доступ к профилю и авторизация доступны только в мобильном приложении."
+          confirmText={<StoreButton platform={platform} />}
           icon={<MdOutlineAccountCircle size={28} />}
           variant="primary"
         />

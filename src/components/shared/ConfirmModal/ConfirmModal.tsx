@@ -11,8 +11,7 @@ interface ConfirmModalProps {
   onConfirm: () => void;
   title: string;
   description: string;
-  confirmText: string;
-  cancelText?: string;
+  confirmText?: React.ReactNode; // теперь может быть JSX
   icon?: React.ReactNode;
   variant?: "danger" | "primary" | "warning";
 }
@@ -24,7 +23,6 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   title,
   description,
   confirmText = "Понятно",
-  cancelText = "Отмена",
   icon,
   variant = "danger",
 }) => {
@@ -64,7 +62,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={onClose}
+          onClick={onClose} // клик на фон закрывает
         >
           <motion.div
             className={styles.modalWindow}
@@ -77,7 +75,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
               stiffness: 300,
               mass: 0.8,
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()} // клик внутри не закрывает
           >
             <div className={styles.modalHeader}>
               {icon && (
@@ -106,12 +104,6 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             </div>
 
             <div className={styles.modalFooter}>
-              <button
-                className={`${styles.modalButton} ${styles.modalButtonSecondary}`}
-                onClick={onClose}
-              >
-                {cancelText}
-              </button>
               <button
                 className={`${styles.modalButton} ${styles.modalButtonPrimary}`}
                 onClick={onConfirm}
