@@ -1,5 +1,5 @@
 // app/auth/Profile.tsx
-import React from "react";
+import React, { useState } from "react";
 import {
   FiUser,
   FiInfo,
@@ -19,6 +19,9 @@ import {
 } from "react-icons/md";
 import { InfoScreen } from "@/components/shared/InfoScreen";
 import { useAuthStore } from "@/contexts/auth.store";
+import ConfirmModal from "@/components/shared/ConfirmModal/ConfirmModal";
+import { detectPlatform } from "@/lib/utils/detectPlatform";
+import { APP_STORE_URL, GOOGLE_PLAY_URL } from "@/constants/main";
 
 interface SettingsItemProp {
   icon: React.ReactNode;
@@ -56,18 +59,48 @@ const SettingsItem: React.FC<SettingsItemProp> = ({
 const Profile: React.FC = () => {
   const { isAuth } = useAuthStore();
   const navigate = useNavigate();
+  const [isAuthUnavailableModalOpen, setAuthUnavailableModalOpen] =
+    useState(false);
+
+  const openAuthUnavailableModal = () => {
+    setAuthUnavailableModalOpen(true);
+  };
+  const platform = detectPlatform();
+
+  const closeAuthUnavailableModal = () => {
+    const storeUrl = platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL;
+    window.open(storeUrl, "_blank");
+
+    setAuthUnavailableModalOpen(false);
+  };
 
   // Исправлено условие: показываем форму входа если пользователь НЕ аутентифицирован
   if (!isAuth) {
     return (
-      <InfoScreen
-        icon={<MdOutlineAccountCircle size={100} color="#999" />}
-        title="Упс! Вы не вошли в аккаунт"
-        text="Пожалуйста, авторизуйтесь, чтобы получить доступ к своему профилю."
-        buttonLabel="Войти"
-        buttonIcon={<FiLogIn size={24} />}
-        onButtonClick={() => navigate("/login")}
-      />
+      <>
+        <InfoScreen
+          icon={<MdOutlineAccountCircle size={100} color="#999" />}
+          title="Упс! Вы не вошли в аккаунт"
+          text="Пожалуйста, авторизуйтесь, чтобы получить доступ к своему профилю."
+          buttonLabel="Войти"
+          buttonIcon={<FiLogIn size={24} />}
+          // onButtonClick={() => navigate("/login")}
+          onButtonClick={openAuthUnavailableModal}
+        />
+
+        <ConfirmModal
+          isOpen={isAuthUnavailableModalOpen}
+          onClose={closeAuthUnavailableModal}
+          onConfirm={closeAuthUnavailableModal}
+          title="Вход недоступен в веб-версии"
+          description="Полный доступ к профилю и авторизация сейчас доступны только в мобильном приложении."
+          confirmText={
+            platform === "ios" ? "Скачать в App Store" : "Скачать в Google Play"
+          }
+          icon={<MdOutlineAccountCircle size={28} />}
+          variant="primary"
+        />
+      </>
     );
   }
 
@@ -107,33 +140,35 @@ const Profile: React.FC = () => {
   const appVersion = "1.0.0";
 
   return (
-    <div className={styles.safeArea}>
-      <div className={styles.scrollContainer}>
-        <div className={styles.section}>
-          {items.slice(0, 1).map((item, idx) => (
-            <SettingsItem key={idx} {...item} />
-          ))}
-        </div>
-        <div className={`${styles.section} ${styles.borderedSection}`}>
-          {items.slice(1).map((item, idx) => (
-            <SettingsItem key={idx} {...item} />
-          ))}
-        </div>
+    <>
+      <div className={styles.safeArea}>
+        <div className={styles.scrollContainer}>
+          <div className={styles.section}>
+            {items.slice(0, 1).map((item, idx) => (
+              <SettingsItem key={idx} {...item} />
+            ))}
+          </div>
+          <div className={`${styles.section} ${styles.borderedSection}`}>
+            {items.slice(1).map((item, idx) => (
+              <SettingsItem key={idx} {...item} />
+            ))}
+          </div>
 
-        <SettingsItem
-          title="Выйти"
-          icon={<MdLogout size={24} />}
-          onClick={handleLogout}
-          textStyle={styles.dangerText}
-          showArrow={false}
-          containerStyle={styles.logout}
-        />
+          <SettingsItem
+            title="Выйти"
+            icon={<MdLogout size={24} />}
+            onClick={handleLogout}
+            textStyle={styles.dangerText}
+            showArrow={false}
+            containerStyle={styles.logout}
+          />
 
-        <div className={styles.versionContainer}>
-          <span className={styles.versionText}>Версия {appVersion}</span>
+          <div className={styles.versionContainer}>
+            <span className={styles.versionText}>Версия {appVersion}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

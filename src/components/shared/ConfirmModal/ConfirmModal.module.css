@@ -1,0 +1,141 @@
+/* ConfirmModal.module.css */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.modalWindow {
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  padding: 28px 28px 20px;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.modalIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  padding-top: 4px;
+  flex: 1;
+}
+
+.modalClose {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  transition: all 0.2s ease;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.modalClose:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #6b7280;
+}
+
+.modalBody {
+  padding: 24px 28px;
+}
+
+.modalText {
+  font-size: 16px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.modalFooter {
+  display: flex;
+  gap: 12px;
+  padding: 20px 28px 28px;
+  background-color: rgba(0, 0, 0, 0.01);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.modalButton {
+  flex: 1;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+}
+
+.modalButtonSecondary {
+  background-color: #f9fafb;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.modalButtonSecondary:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.modalButtonSecondary:active {
+  transform: translateY(0);
+}
+
+.modalButtonPrimary {
+  background-color: #ef4444;
+  color: white;
+  border: 1px solid #ef4444;
+}
+
+.modalButtonPrimary:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.modalButtonPrimary:active {
+  transform: translateY(0);
+}

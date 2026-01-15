@@ -54,3 +54,8 @@ export const LOCATIONS: any[] = [
   { key: "dagestan", label: "Республика Дагестан" },
   { key: "ingushetia", label: "Республика Ингушетия" },
 ];
+
+export const APP_STORE_URL = "https://apps.apple.com/app/idXXXXXXXXX";
+
+export const GOOGLE_PLAY_URL =
+  "https://play.google.com/store/apps/details?id=your.app.id";
