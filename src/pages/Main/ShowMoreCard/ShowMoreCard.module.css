@@ -49,7 +49,7 @@
   flex-shrink: 1;
   position: absolute;
   left: 20px;
-  top: 48%;
+  top: 50%;
   transform: translateY(-50%);
 }
 
