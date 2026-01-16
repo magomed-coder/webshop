@@ -1,0 +1,19 @@
+.section {
+  margin-bottom: 32px;
+}
+
+.subheader {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.paragraph {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.brand {
+  color: #969ca2;
+  font-weight: 500;
+}

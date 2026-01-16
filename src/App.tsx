@@ -19,6 +19,7 @@ import NotFound from "./pages/NotFound";
 import { AppNavigation } from "./navigation/Navigation";
 import Users from "./pages/admin/Users";
 import Products from "./pages/admin/Products";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/about" element={<About />} />
         {/* <Route path="/invite/:referralCode" element={<Invite />} /> */}
         <Route path="/link/:referralCode" element={<ProductRedirect />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         {/* 🔐 Только для ADMIN */}
         <Route

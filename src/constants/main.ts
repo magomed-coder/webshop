@@ -55,6 +55,8 @@ export const LOCATIONS: any[] = [
   { key: "ingushetia", label: "Республика Ингушетия" },
 ];
 
+export const SUPPORT_EMAIL = "shareearn@mail.ru";
+
 export const APP_STORE_URL = "https://apps.apple.com/app/idXXXXXXXXX";
 
 export const GOOGLE_PLAY_URL =
