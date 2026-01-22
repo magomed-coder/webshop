@@ -77,6 +77,7 @@ const ProductDetailScreen = () => {
       await createOrder(payload);
 
       localStorage.setItem(CONTACT_PHONE_KEY, payload.customer_phone.trim());
+      setIsSent(true);
 
       setTimeout(() => {
         setSheetOpen(false);
@@ -333,3 +334,7 @@ const ProductDetailScreen = () => {
 };
 
 export default ProductDetailScreen;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
