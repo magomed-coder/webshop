@@ -105,7 +105,7 @@ const ProductDetailScreen = () => {
     setError(undefined);
   };
 
-  const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
     setError(undefined);
   };
@@ -297,12 +297,11 @@ const ProductDetailScreen = () => {
                     inputClassName={styles.phoneInput}
                   />
 
-                  <Input
-                    label="Комментарий к заказу"
-                    placeholder="Например: интересует доставка"
+                  <textarea
+                    placeholder="Комментарий к заказу (необязательно)"
                     value={comment}
                     onChange={handleCommentChange}
-                    inputClassName={styles.phoneInput}
+                    className={styles.commentTextarea}
                   />
 
                   <Button
