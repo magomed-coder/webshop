@@ -22,6 +22,7 @@ import { Sheet } from "react-modal-sheet";
 import { Input } from "@/components/shared/Input";
 import { useReferral } from "@/hooks/useReferral";
 import { Button } from "@/components/shared/Button";
+import Modal from "@/components/shared/Modal/Modal";
 import { useCatalogStore } from "@/contexts/catalog.store";
 import type { CreateOrderDTO } from "@/types";
 import { useOrderStore } from "@/contexts/order.store";
@@ -53,9 +54,14 @@ const ProductDetailScreen = () => {
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [comment, setComment] = useState("");
-  const [error, setError] = useState<string | undefined>();
+  const [nameError, setNameError] = useState<string | undefined>();
+  const [phoneError, setPhoneError] = useState<string | undefined>();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState<string>("");
 
   const handleSubmitOrder = async () => {
+    setNameError(undefined);
+    setPhoneError(undefined);
     const payload: CreateOrderDTO = {
       referral_code: referralCode ?? null,
       customer_name: customerName.trim(),
@@ -63,15 +69,16 @@ const ProductDetailScreen = () => {
       comment: comment.trim(),
     };
 
-    // Минимальная валидация на фронте
+    let hasError = false;
     if (!payload.customer_name) {
-      alert("Укажите корректно имя");
-      return;
+      setNameError("Укажите корректно имя");
+      hasError = true;
     }
     if (!payload.customer_phone || payload.customer_phone.length < 10) {
-      alert("Укажите корректный номер телефона");
-      return;
+      setPhoneError("Укажите корректный номер телефона");
+      hasError = true;
     }
+    if (hasError) return;
 
     try {
       await createOrder(payload);
@@ -92,28 +99,32 @@ const ProductDetailScreen = () => {
         error.response?.data?.message ||
         "Не удалось отправить заявку. Попробуйте позже.";
 
-      alert(errorMessage);
+      setModalMessage(errorMessage);
+      setModalOpen(true);
     }
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomerName(e.target.value);
-    setError(undefined);
+    setNameError(undefined);
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomerPhone(e.target.value);
-    setError(undefined);
+    setPhoneError(undefined);
   };
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
-    setError(undefined);
   };
 
   const handleContact = async () => {
     if (!currentProduct) return;
-
+    if (!currentProduct.is_active) {
+      setModalMessage("Продукта нет в наличии");
+      setModalOpen(true);
+      return;
+    }
     setIsSent(false);
     setSheetOpen(true);
   };
@@ -142,7 +153,7 @@ const ProductDetailScreen = () => {
     return () => {
       clearCurrentProduct();
     };
-  }, [productId, products]);
+  }, [clearCurrentProduct, fetchProduct, navigate, productId, products]);
 
   useEffect(() => {
     const savedPhone = localStorage.getItem("contact_phone");
@@ -285,7 +296,7 @@ const ProductDetailScreen = () => {
                     placeholder="Джон Доу"
                     value={customerName}
                     onChange={handleNameChange}
-                    error={error}
+                    error={nameError}
                     inputClassName={styles.phoneInput}
                   />
 
@@ -294,7 +305,7 @@ const ProductDetailScreen = () => {
                     placeholder="+7 (000) 000-00-00"
                     value={customerPhone}
                     onChange={handlePhoneChange}
-                    error={error}
+                    error={phoneError}
                     inputClassName={styles.phoneInput}
                   />
 
@@ -329,6 +340,14 @@ const ProductDetailScreen = () => {
 
         <Sheet.Backdrop onTap={() => setSheetOpen(false)} />
       </Sheet>
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Внимание"
+        footer={<Button label="Понятно" onClick={() => setModalOpen(false)} />}
+      >
+        {modalMessage}
+      </Modal>
     </>
   );
 };
