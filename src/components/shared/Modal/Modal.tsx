@@ -69,7 +69,7 @@ const Modal: React.FC<ModalProps> = ({
               {footer && <div className={styles.modalFooter}>{footer}</div>}
             </motion.div>
           </motion.div>,
-          document.getElementById("modals") as HTMLElement
+          document.getElementById("modals") as HTMLElement,
         )}
     </AnimatePresence>
   );
