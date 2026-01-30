@@ -353,7 +353,3 @@ const ProductDetailScreen = () => {
 };
 
 export default ProductDetailScreen;
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
