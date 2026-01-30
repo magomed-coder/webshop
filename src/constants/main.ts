@@ -57,7 +57,9 @@ export const LOCATIONS: any[] = [
 
 export const SUPPORT_EMAIL = "shareearn@mail.ru";
 
-export const APP_STORE_URL = "https://apps.apple.com/app/idXXXXXXXXX";
+// export const APP_STORE_URL = "https://apps.apple.com/app/idXXXXXXXXX";
+export const APP_STORE_URL =
+  "https://apps.apple.com/ru/app/share-earn/id6757867380";
 
 export const GOOGLE_PLAY_URL =
   "https://play.google.com/store/apps/details?id=your.app.id";
