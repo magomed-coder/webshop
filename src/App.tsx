@@ -21,6 +21,8 @@ import Users from "./pages/admin/Users";
 import Products from "./pages/admin/Products";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 
+import LoginScreen from "./pages/Login";
+
 function App() {
   return (
     <div className="app-container">
@@ -36,6 +38,8 @@ function App() {
         {/* <Route path="/invite/:referralCode" element={<Invite />} /> */}
         <Route path="/link/:referralCode" element={<ProductRedirect />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+        <Route path="/admin/login" element={<LoginScreen />} />
 
         {/* 🔐 Только для ADMIN */}
         <Route
@@ -57,8 +61,6 @@ function App() {
           <Route path="settings" element={<Settings />} />
           <Route path="users" element={<Users />} />
         </Route>
-
-        <Route path="/admin/login" element={<Main />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFound />} />

@@ -62,4 +62,4 @@ export const APP_STORE_URL =
   "https://apps.apple.com/ru/app/share-earn/id6757867380";
 
 export const GOOGLE_PLAY_URL =
-  "https://play.google.com/store/apps/details?id=your.app.id";
+  "https://drive.google.com/file/d/1JpL_2E3v6xkdMK30RKbs2p6Y1u2T69y4/view?usp=sharing";
