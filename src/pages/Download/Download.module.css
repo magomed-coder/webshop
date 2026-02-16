@@ -1,0 +1,102 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 40px 32px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.iconWrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.description {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+.redirect {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 24px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #3b82f6;
+  color: #fff;
+}
+
+.button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.alternativeLinks {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.altTitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 12px;
+}
+
+.altLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.altLink:hover {
+  color: #fff;
+}

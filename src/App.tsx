@@ -20,6 +20,7 @@ import { AppNavigation } from "./navigation/Navigation";
 import Users from "./pages/admin/Users";
 import Products from "./pages/admin/Products";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import Download from "./pages/Download";
 
 import LoginScreen from "./pages/Login";
 
@@ -38,6 +39,7 @@ function App() {
         {/* <Route path="/invite/:referralCode" element={<Invite />} /> */}
         <Route path="/link/:referralCode" element={<ProductRedirect />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/download" element={<Download />} />
 
         <Route path="/admin/login" element={<LoginScreen />} />
 
