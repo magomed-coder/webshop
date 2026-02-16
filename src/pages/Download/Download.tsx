@@ -8,12 +8,11 @@ const Download: React.FC = () => {
   const platform = getMobileOS();
 
   useEffect(() => {
-    // Автоматический редирект через 3 секунды
+    // Автоматический редирект через 5 секунд
     const timer = setTimeout(() => {
       window.location.href =
         platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL;
-    }, 3000);
-
+    }, 5000);
     return () => clearTimeout(timer);
   }, [platform]);
 
@@ -45,7 +44,7 @@ const Download: React.FC = () => {
         </p>
 
         <p className={styles.redirect}>
-          Автоматическое перенаправление через 3 секунды...
+          Автоматическое перенаправление через 5 секунд...
         </p>
 
         <button className={styles.button} onClick={handleDownload}>

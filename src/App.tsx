@@ -31,7 +31,7 @@ function App() {
   const hideNavigation = HIDDEN_NAV_ROUTES.includes(location.pathname);
 
   return (
-    <div className="app-container">
+    <div className={`app-container${hideNavigation ? " no-tabbar" : ""}`}>
       {/* Основной контент */}
 
       <Routes>
