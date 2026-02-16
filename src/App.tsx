@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ProductRedirect from "./pages/ProductRedirect";
 import Categories from "./pages/Categories/CategoriesScreen/Categories";
 import Profile from "./pages/Profile/Profile";
@@ -24,7 +24,12 @@ import Download from "./pages/Download";
 
 import LoginScreen from "./pages/Login";
 
+const HIDDEN_NAV_ROUTES = ["/download"];
+
 function App() {
+  const location = useLocation();
+  const hideNavigation = HIDDEN_NAV_ROUTES.includes(location.pathname);
+
   return (
     <div className="app-container">
       {/* Основной контент */}
@@ -68,7 +73,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <AppNavigation />
+      {!hideNavigation && <AppNavigation />}
     </div>
   );
 }
