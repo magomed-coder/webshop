@@ -10,7 +10,9 @@ import type { CategoryDTO } from "@/types";
 
 const MAX_VISIBLE_CATEGORIES = 5;
 
-const categoryData = (categories: CategoryDTO[]) => {
+const categoryData = (
+  categories: CategoryDTO[],
+): (CategoryDTO | { id: string; type: string })[] => {
   // Если категорий больше максимума - добавляем кнопку "Все категории"
   if (categories.length > MAX_VISIBLE_CATEGORIES) {
     return [
@@ -26,13 +28,13 @@ const MainScreen: React.FC = () => {
   const { fetchCategories, categories } = useCatalogStore();
 
   // Рендер элемента списка
-  const renderItem = (item: any) => {
+  const renderItem = (item: CategoryDTO | { id: string; type: string }) => {
     // Для кнопки "Показать все"
-    if (item.type === "show-more") {
+    if ("type" in item && item.type === "show-more") {
       return <ShowMoreCard key={item.id} />;
     }
     // Для обычной категории
-    return <OfferCard key={item.id} item={item} />;
+    return <OfferCard key={item.id} item={item as CategoryDTO} />;
   };
 
   useEffect(() => {
