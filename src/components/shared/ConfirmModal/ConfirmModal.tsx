@@ -9,7 +9,7 @@ interface ConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  title: string;
+  title: React.ReactNode;
   description: string;
   confirmText?: React.ReactNode; // теперь может быть JSX
   icon?: React.ReactNode;

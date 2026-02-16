@@ -114,7 +114,7 @@ const Profile: React.FC = () => {
           isOpen={isAuthUnavailableModalOpen}
           onClose={closeAuthUnavailableModal}
           onConfirm={сonfirmAuthUnavailableModal}
-          title="Вход недоступен в веб-версии"
+          title={<>Вход недоступен<br />в веб-версии</>}
           description="Полный доступ к профилю и авторизация доступны только в мобильном приложении."
           confirmText={<StoreButton platform={platform} />}
           icon={<MdOutlineAccountCircle size={28} />}
