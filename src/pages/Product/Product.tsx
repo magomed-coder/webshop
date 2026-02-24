@@ -173,7 +173,10 @@ const ProductDetailScreen = () => {
   }
 
   const categoryTitle = currentProduct.category_name;
-  const images = currentProduct.images.map((img) => img.image);
+  const nonMainImages = currentProduct.images.filter((img) => !img.is_main);
+  const images = nonMainImages.length > 0 
+    ? nonMainImages.map((img) => img.image)
+    : currentProduct.images.map((img) => img.image);
 
   return (
     <>

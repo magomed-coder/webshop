@@ -33,11 +33,14 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(
       );
     }
 
+    const secondaryImage =
+      product.images.find((img) => !img.is_main) || product.images[0];
+
     return (
       <div className={styles.card} onClick={onPress}>
         <div className={styles.productImageWrapper}>
           <img
-            src={product.images[0].image}
+            src={secondaryImage.image}
             alt={product.title}
             className={styles.productImage}
           />
@@ -59,7 +62,7 @@ export const ProductCard: React.FC<ProductCardProps> = React.memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 ProductCard.displayName = "ProductCard";
