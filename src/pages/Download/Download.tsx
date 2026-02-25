@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaApple, FaAndroid } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { getMobileOS } from "@/lib/utils/getMobileOS";
