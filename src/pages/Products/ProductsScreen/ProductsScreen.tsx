@@ -8,11 +8,11 @@ import FilterModal from "../FilterModal/FilterModal";
 import { ProductCard } from "../ProductCard/ProductCard";
 import { skeletonProducts } from "@/constants/data";
 import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
-import { LOCATIONS } from "@/constants/main";
+import { LOCATIONS, type LocationItem } from "@/constants/main";
 import type { FilterType, ProductDTO } from "@/types";
 import { ProductsHeader } from "../ProductsHeader/ProductsHeader";
 import { Container } from "@/components/shared/Container/Container";
-import { useCatalogStore } from "@/contexts/catalog.store";
+import { useCategories, useProducts } from "@/hooks/useQueries";
 
 // categoryId: CategoryNameValue;
 
@@ -32,10 +32,13 @@ const ProductListScreen: React.FC = () => {
     sortBy: "default",
     withExtraBonus: false,
   });
-  const [selectedLocations, setSelectedLocations] = useState<any[]>([]);
+  const [selectedLocations, setSelectedLocations] = useState<LocationItem[]>(
+    [],
+  );
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
-  const { fetchProducts, products: Allproducts } = useCatalogStore();
+  const { data: Allproducts = [] } = useProducts();
+  const { data: Allcategories = [] } = useCategories();
 
   /* ----------------------------- Handlers ----------------------------- */
 
@@ -127,21 +130,10 @@ const ProductListScreen: React.FC = () => {
 
   useEffect(() => {
     const loadAndFilter = async () => {
-      let allProducts = Allproducts;
-
-      // если продуктов ещё нет в сторе → загружаем
-      if (allProducts.length === 0) {
-        setIsLoading(true);
-        try {
-          allProducts = await fetchProducts();
-          // Здесь можно сразу сохранить в стор, если нужно
-        } catch (err) {
-          console.log("[fetchProducts error]", err);
-        }
-      }
+      const categoryProducts = Allproducts || [];
 
       // Фильтруем по текущей категории
-      const filtered = allProducts.filter(
+      const filtered = categoryProducts.filter(
         (p) => p.category === Number(categoryId),
       );
 
@@ -153,11 +145,13 @@ const ProductListScreen: React.FC = () => {
     loadAndFilter();
 
     return () => {};
-  }, [categoryId]);
+  }, [categoryId, Allproducts]);
 
   /* ----------------------------- Render states ----------------------------- */
 
-  const categoryTitle = getCategoryTitle(categoryId || "") || "Категория";
+  const categoryTitle =
+    Allcategories.find((category) => category.id === Number(categoryId))
+      ?.name || "Категория";
 
   if (!products.length && !isLoading) {
     return (

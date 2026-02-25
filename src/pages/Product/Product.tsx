@@ -1,6 +1,6 @@
 // ProductDetailScreen.tsx
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import styles from "./ProductDetailScreen.module.css";
 
 import {
@@ -17,15 +17,14 @@ import { formatPrice } from "@/lib/utils/formatters";
 import ImageSwiper from "@/components/ImageSwiper/ImageSwiper";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import BackButton from "@/components/shared/BackButton/BackButton";
-
 import { Sheet } from "react-modal-sheet";
 import { Input } from "@/components/shared/Input";
 import { useReferral } from "@/hooks/useReferral";
 import { Button } from "@/components/shared/Button";
 import Modal from "@/components/shared/Modal/Modal";
-import { useCatalogStore } from "@/contexts/catalog.store";
+
 import type { CreateOrderDTO } from "@/types";
-import { useOrderStore } from "@/contexts/order.store";
+import { useCreateOrder, useProduct } from "@/hooks/useQueries";
 
 const CONTACT_PHONE_KEY = "contact_phone";
 
@@ -37,14 +36,11 @@ const ProductDetailScreen = () => {
   const location = useLocation();
   const referralCode = location.state?.referralCode as string | undefined;
 
-  const navigate = useNavigate();
-
   const { clear } = useReferral();
 
-  const { products, currentProduct, fetchProduct, clearCurrentProduct } =
-    useCatalogStore();
+  const { product, isError, isLoading } = useProduct(Number(productId));
 
-  const { createOrder } = useOrderStore();
+  const { mutate: createOrder } = useCreateOrder();
 
   const isMobile = useIsMobile();
 
@@ -119,8 +115,8 @@ const ProductDetailScreen = () => {
   };
 
   const handleContact = async () => {
-    if (!currentProduct) return;
-    if (!currentProduct.is_active) {
+    if (!product) return;
+    if (!product.is_active) {
       setModalMessage("Продукта нет в наличии");
       setModalOpen(true);
       return;
@@ -128,32 +124,6 @@ const ProductDetailScreen = () => {
     setIsSent(false);
     setSheetOpen(true);
   };
-
-  useEffect(() => {
-    if (!productId) {
-      navigate("/", { replace: true });
-      return;
-    }
-
-    const prodId = Number(productId);
-
-    // 1. Пытаемся найти в уже загруженных продуктах
-    const cachedProduct = products.find((p) => p.id === prodId);
-
-    if (cachedProduct) {
-      // продукт уже есть — используем его
-      useCatalogStore.setState({ currentProduct: cachedProduct });
-      return;
-    }
-
-    // 2. Если нет — делаем запрос
-    fetchProduct(prodId);
-
-    // 3. cleanup
-    return () => {
-      clearCurrentProduct();
-    };
-  }, [clearCurrentProduct, fetchProduct, navigate, productId, products]);
 
   useEffect(() => {
     const savedPhone = localStorage.getItem("contact_phone");
@@ -166,17 +136,22 @@ const ProductDetailScreen = () => {
     return () => {
       clear();
     };
-  }, []);
+  }, [clear]);
 
-  if (!currentProduct) {
+  if (isLoading) {
     return <div className={styles.loading}>Загрузка...</div>;
   }
 
-  const categoryTitle = currentProduct.category_name;
-  const nonMainImages = currentProduct.images.filter((img) => !img.is_main);
-  const images = nonMainImages.length > 0 
-    ? nonMainImages.map((img) => img.image)
-    : currentProduct.images.map((img) => img.image);
+  if (!product || isError) {
+    return <div className={styles.loading}>Товар не найден</div>;
+  }
+
+  const categoryTitle = product.category_name;
+  const nonMainImages = product.images.filter((img) => !img.is_main);
+  const images =
+    nonMainImages.length > 0
+      ? nonMainImages.map((img) => img.image)
+      : product.images.map((img) => img.image);
 
   return (
     <>
@@ -187,7 +162,7 @@ const ProductDetailScreen = () => {
 
           <div className={styles.productContent}>
             <div className={styles.productInfoSection}>
-              <h1 className={styles.productName}>{currentProduct.title}</h1>
+              <h1 className={styles.productName}>{product.title}</h1>
 
               <div className={styles.pricingContainer}>
                 <div className={styles.priceBlock}>
@@ -196,7 +171,7 @@ const ProductDetailScreen = () => {
                     <span className={styles.priceLabel}>Цена</span>
                   </div>
                   <div className={styles.priceValue}>
-                    {formatPrice(currentProduct.price)}₽
+                    {formatPrice(product.price)}₽
                   </div>
                 </div>
               </div>
@@ -207,9 +182,7 @@ const ProductDetailScreen = () => {
                 <IoDocumentTextOutline size={20} />
                 <h2 className={styles.sectionTitleText}>Описание</h2>
               </div>
-              <p className={styles.productDescription}>
-                {currentProduct.description}
-              </p>
+              <p className={styles.productDescription}>{product.description}</p>
             </div>
 
             <div className={styles.productDetailsSection}>
@@ -241,19 +214,19 @@ const ProductDetailScreen = () => {
                   </div>
                   <div
                     className={`${styles.stockBadge} ${
-                      currentProduct.is_active
+                      product.is_active
                         ? styles.inStockBadge
                         : styles.outOfStockBadge
                     }`}
                   >
                     <span
                       className={`${styles.stockText} ${
-                        currentProduct.is_active
+                        product.is_active
                           ? styles.inStockText
                           : styles.outOfStockText
                       }`}
                     >
-                      {currentProduct.is_active ? "В наличии" : "Нет в наличии"}
+                      {product.is_active ? "В наличии" : "Нет в наличии"}
                     </span>
                   </div>
                 </div>
