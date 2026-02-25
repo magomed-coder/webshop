@@ -68,23 +68,23 @@ const buttonVariants = {
 
 const Download: React.FC = () => {
   const platform = getMobileOS();
-  const [timeLeft, setTimeLeft] = useState(5);
+  // const [timeLeft, setTimeLeft] = useState(5);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+  //   }, 1000);
 
-    const redirectTimer = setTimeout(() => {
-      window.location.href =
-        platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL;
-    }, 5000);
+  //   const redirectTimer = setTimeout(() => {
+  //     window.location.href =
+  //       platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL;
+  //   }, 5000);
 
-    return () => {
-      clearInterval(timer);
-      clearTimeout(redirectTimer);
-    };
-  }, [platform]);
+  //   return () => {
+  //     clearInterval(timer);
+  //     clearTimeout(redirectTimer);
+  //   };
+  // }, [platform]);
 
   const handleDownload = () => {
     window.location.href = platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL;
@@ -136,7 +136,7 @@ const Download: React.FC = () => {
         </motion.p>
 
         {/* Таймер с анимацией */}
-        <motion.div
+        {/* <motion.div
           variants={itemVariants}
           className="bg-gray-50 rounded-xl p-4 mb-6"
         >
@@ -161,7 +161,7 @@ const Download: React.FC = () => {
               transition={{ duration: 1, ease: "linear" }}
             />
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* Основная кнопка */}
         <motion.button
