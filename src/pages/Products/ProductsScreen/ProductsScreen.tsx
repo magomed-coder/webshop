@@ -37,7 +37,8 @@ const ProductListScreen: React.FC = () => {
   );
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
-  const { data: Allproducts = [] } = useProducts();
+  const { data: Allproducts = [], isLoading: isProductsLoading } =
+    useProducts();
   const { data: Allcategories = [] } = useCategories();
 
   /* ----------------------------- Handlers ----------------------------- */
@@ -153,7 +154,7 @@ const ProductListScreen: React.FC = () => {
     Allcategories.find((category) => category.id === Number(categoryId))
       ?.name || "Категория";
 
-  if (!products.length && !isLoading) {
+  if (!products.length && !Allproducts.length && !isProductsLoading) {
     return (
       <div className={styles.screen}>
         <ProductsHeader

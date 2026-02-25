@@ -199,6 +199,9 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
                     onClick={handleModalPrev}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
+                    transformTemplate={({ scale }) =>
+                      `translateY(-50%) scale(${scale})`
+                    }
                   >
                     <IoChevronBack size={32} />
                   </motion.button>
@@ -208,6 +211,9 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
                     onClick={handleModalNext}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
+                    transformTemplate={({ scale }) =>
+                      `translateY(-50%) scale(${scale})`
+                    }
                   >
                     <IoChevronForward size={32} />
                   </motion.button>
@@ -217,6 +223,9 @@ const ImageSwiper: React.FC<ImageSwiperProps> = ({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
+                    transformTemplate={({ y }) =>
+                      `translateX(-50%) translateY(${y})`
+                    }
                   >
                     {modalIndex + 1} / {data.length}
                   </motion.div>

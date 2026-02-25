@@ -25,6 +25,7 @@ import Modal from "@/components/shared/Modal/Modal";
 
 import type { CreateOrderDTO } from "@/types";
 import { useCreateOrder, useProduct } from "@/hooks/useQueries";
+import { AxiosError } from "axios";
 
 const CONTACT_PHONE_KEY = "contact_phone";
 
@@ -89,14 +90,16 @@ const ProductDetailScreen = () => {
         setCustomerPhone("");
         setComment("");
       }, 2500);
-    } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.detail ||
-        error.response?.data?.message ||
-        "Не удалось отправить заявку. Попробуйте позже.";
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        const errorMessage =
+          error.response?.data?.detail ||
+          error.response?.data?.message ||
+          "Не удалось отправить заявку. Попробуйте позже.";
 
-      setModalMessage(errorMessage);
-      setModalOpen(true);
+        setModalMessage(errorMessage);
+        setModalOpen(true);
+      }
     }
   };
 
