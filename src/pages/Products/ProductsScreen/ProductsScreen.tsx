@@ -7,7 +7,6 @@ import styles from "./ProductsScreen.module.css";
 import FilterModal from "../FilterModal/FilterModal";
 import { ProductCard } from "../ProductCard/ProductCard";
 import { skeletonProducts } from "@/constants/data";
-import { getCategoryTitle } from "@/lib/utils/category.utils";
 import { Paragraph } from "@/components/shared/Paragraph/Paragraph";
 import { LOCATIONS } from "@/constants/main";
 import type { FilterType, ProductDTO } from "@/types";
@@ -68,22 +67,22 @@ const ProductListScreen: React.FC = () => {
     switch (filters.sortBy) {
       case "price_asc":
         result.sort(
-          (a, b) => toNumber(a.extra_bonus) - toNumber(b.extra_bonus)
+          (a, b) => toNumber(a.extra_bonus) - toNumber(b.extra_bonus),
         );
         break;
       case "price_desc":
         result.sort(
-          (a, b) => toNumber(b.extra_bonus) - toNumber(a.extra_bonus)
+          (a, b) => toNumber(b.extra_bonus) - toNumber(a.extra_bonus),
         );
         break;
       case "referral_desc":
         result.sort(
-          (a, b) => toNumber(b.extra_bonus) - toNumber(a.extra_bonus)
+          (a, b) => toNumber(b.extra_bonus) - toNumber(a.extra_bonus),
         );
         break;
       case "referral_asc":
         result.sort(
-          (a, b) => toNumber(a.extra_bonus) - toNumber(b.extra_bonus)
+          (a, b) => toNumber(a.extra_bonus) - toNumber(b.extra_bonus),
         );
         break;
       default:
@@ -108,7 +107,7 @@ const ProductListScreen: React.FC = () => {
     (id: number) => {
       navigate(`/product/${id}`);
     },
-    [navigate]
+    [navigate],
   );
 
   const toggleLocation = useCallback((item: any) => {
@@ -143,7 +142,7 @@ const ProductListScreen: React.FC = () => {
 
       // Фильтруем по текущей категории
       const filtered = allProducts.filter(
-        (p) => p.category === Number(categoryId)
+        (p) => p.category === Number(categoryId),
       );
 
       setProducts(filtered);

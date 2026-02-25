@@ -39,6 +39,24 @@ export const ENDPOINTS = {
   APP_VERSION: "/api/app-version/",
 } as const;
 
+// Константы времени кэширования (в миллисекундах)
+export const STALE_TIME = {
+  TEST: 60 * 1000, // 1 минута
+  SHORT: 5 * 60 * 1000, // 5 минут
+  LONG: 10 * 60 * 1000, // 10 минут
+  HOUR: 60 * 60 * 1000, // 1 час
+  DAY: 24 * 60 * 60 * 1000, // 1 день
+} as const;
+
+// Константы для ключей запросов
+export const QUERY_KEYS = {
+  REFERRAL_LINKS: (userId?: number) => ["referral-links", userId],
+  REFERRAL_ORDERS: (userId?: number) => ["referral-orders", userId],
+  PRODUCTS: ["products"],
+  PRODUCT: (productId: number) => ["product", productId],
+  CATEGORIES: ["categories"],
+} as const;
+
 export const STORAGE_KEYS = {
   AUTH: {
     ACCESS: "access_token",
