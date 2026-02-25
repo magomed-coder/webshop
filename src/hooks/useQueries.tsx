@@ -1,14 +1,20 @@
 import { QUERY_KEYS, STALE_TIME } from "@/constants/main";
 import { useAuthStore } from "@/contexts/auth.store";
 import { CatalogService } from "@/services/catalog.service";
+import { OrderService } from "@/services/order.service";
 import { ReferralService } from "@/services/referral.service";
 import type {
   CategoryDTO,
+  CreateOrderDTO,
+  CreateReferralLinkDTO,
+  OrderDTO,
   ProductDTO,
+  PublicReferralRedirectDTO,
   ReferralLinkDTO,
   ReferralOrderDTO,
 } from "@/types";
-import { useQuery } from "@tanstack/react-query";
+
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // Хук для получения реферальных ссылок
 export const useReferralLinks = () => {
@@ -42,6 +48,52 @@ export const useReferralOrders = () => {
   });
 };
 
+// Хук для создания заказа (мутация)
+export const useCreateOrder = () => {
+  return useMutation<OrderDTO, Error, CreateOrderDTO>({
+    mutationFn: async (payload: CreateOrderDTO) => {
+      const response = await OrderService.create(payload);
+      return response.data;
+    },
+  });
+};
+
+// Хук для создания реферальной ссылки (мутация)
+export const useCreateReferralLink = () => {
+  const { user } = useAuthStore();
+  const queryClient = useQueryClient();
+
+  return useMutation<ReferralLinkDTO, Error, CreateReferralLinkDTO>({
+    mutationFn: async (payload: CreateReferralLinkDTO) => {
+      const response = await ReferralService.createLink(payload.product_id);
+      return response.data;
+    },
+    onSuccess: (newLink) => {
+      // Обновляем кеш реферальных ссылок
+      queryClient.setQueryData(
+        QUERY_KEYS.REFERRAL_LINKS(user?.id),
+        (old: ReferralLinkDTO[] | undefined) => {
+          return old ? [...old, newLink] : [newLink];
+        },
+      );
+    },
+  });
+};
+
+// Хук для получения заказов по конкретной реферальной ссылке
+export const useOrdersByReferralLink = (linkId: number) => {
+  return useQuery<ReferralOrderDTO[]>({
+    queryKey: QUERY_KEYS.REFERRAL_ORDERS_BY_LINK(linkId),
+    queryFn: async () => {
+      const response = await ReferralService.getOrdersByLink(linkId);
+      return response.data;
+    },
+    enabled: !!linkId,
+    staleTime: STALE_TIME.SHORT,
+    refetchOnWindowFocus: true,
+  });
+};
+
 // Хук для получения продуктов
 export const useProducts = () => {
   return useQuery<ProductDTO[]>({
@@ -53,24 +105,6 @@ export const useProducts = () => {
     staleTime: STALE_TIME.HOUR,
     refetchOnWindowFocus: true,
   });
-};
-
-// Хук для получения продуктов по категории
-export const useProductsByCategory = (categoryId: number) => {
-  const productsQuery = useProducts();
-
-  const filteredProducts = (productsQuery.data || []).filter(
-    (p) => p.category === categoryId,
-  );
-
-  return {
-    products: filteredProducts,
-    allProducts: productsQuery.data || [],
-    isLoading: productsQuery.isLoading,
-    isError: productsQuery.isError,
-    error: productsQuery.error,
-    refetch: productsQuery.refetch,
-  };
 };
 
 // Хук для получения одного продукта по ID
@@ -153,4 +187,21 @@ export const useActivityData = () => {
     refetchOrders: ordersQuery.refetch,
     refetchProducts: productsQuery.refetch,
   };
+};
+
+/**
+ * React Query хук для получения публичных данных реферального перехода
+ * @param code Реферальный код
+ * @param enabled Включить или отключить автоматическое выполнение запроса
+ */
+export const usePublicRedirect = (code: string, enabled = true) => {
+  return useQuery<PublicReferralRedirectDTO>({
+    queryKey: ["publicReferralRedirect", code],
+    queryFn: async () => {
+      const response = await ReferralService.publicRedirect(code);
+      return response.data;
+    },
+    enabled: enabled && !!code, // Выполняем запрос только если есть код и enabled=true
+    staleTime: STALE_TIME.SHORT, // 5 минут кеш
+  });
 };

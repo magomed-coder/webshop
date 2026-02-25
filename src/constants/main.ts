@@ -52,6 +52,10 @@ export const STALE_TIME = {
 export const QUERY_KEYS = {
   REFERRAL_LINKS: (userId?: number) => ["referral-links", userId],
   REFERRAL_ORDERS: (userId?: number) => ["referral-orders", userId],
+  REFERRAL_ORDERS_BY_LINK: (linkId: number) => [
+    "referral-orders-by-link",
+    linkId,
+  ],
   PRODUCTS: ["products"],
   PRODUCT: (productId: number) => ["product", productId],
   CATEGORIES: ["categories"],
@@ -65,9 +69,14 @@ export const STORAGE_KEYS = {
   REFERRAL_CODE: "referral_code",
 } as const;
 
+export interface LocationItem {
+  key: string;
+  label: string;
+}
+
 // /** список доступных локаций */
 // export const LOCATIONS: OptionItem[] = [
-export const LOCATIONS: any[] = [
+export const LOCATIONS: LocationItem[] = [
   { key: "chechnya", label: "Чеченская Республика" },
   { key: "dagestan", label: "Республика Дагестан" },
   { key: "ingushetia", label: "Республика Ингушетия" },

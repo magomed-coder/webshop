@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "./MainScreen.module.css";
 import { Container } from "@/components/shared/Container/Container";
 import { Title } from "@/components/shared/Title/Title";
 import { OfferCard } from "../Categories/OfferCard/OfferCard";
 import { ShowMoreCard } from "./ShowMoreCard/ShowMoreCard";
 import { AboutCompanyFooter } from "./AboutCompanyFooter/AboutCompanyFooter";
-import { useCatalogStore } from "@/contexts/catalog.store";
 import type { CategoryDTO } from "@/types";
+import { useCategories } from "@/hooks/useQueries";
 
 const MAX_VISIBLE_CATEGORIES = 5;
 
@@ -25,7 +25,7 @@ const categoryData = (
 
 const MainScreen: React.FC = () => {
   const listRef = useRef<HTMLDivElement>(null);
-  const { fetchCategories, categories } = useCatalogStore();
+  const { data: categories = [] } = useCategories();
 
   // Рендер элемента списка
   const renderItem = (item: CategoryDTO | { id: string; type: string }) => {
@@ -36,15 +36,6 @@ const MainScreen: React.FC = () => {
     // Для обычной категории
     return <OfferCard key={item.id} item={item as CategoryDTO} />;
   };
-
-  useEffect(() => {
-    // Запрашиваем категории только если их ещё нет (массив пустой)
-    if (categories.length === 0) {
-      fetchCategories()
-        .then((data) => console.log("fetchCategories data", data))
-        .catch((err) => console.log("fetchCategories error", err));
-    }
-  }, [categories, fetchCategories]); // добавляем зависимости
 
   return (
     <Container>
