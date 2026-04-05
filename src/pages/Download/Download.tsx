@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaApple, FaAndroid } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { getMobileOS } from "@/lib/utils/getMobileOS";
-import { APP_STORE_URL, GOOGLE_PLAY_URL } from "@/constants/main";
+import { useAppVersionStore } from "@/contexts/version.store";
+import { getOppositePlatform } from "@/lib/utils/getOppositePlatform";
+import { versionService } from "@/services/version.service";
 
 // Анимационные варианты
 const containerVariants = {
@@ -67,7 +69,6 @@ const buttonVariants = {
 };
 
 const Download: React.FC = () => {
-  const platform = getMobileOS();
   // const [timeLeft, setTimeLeft] = useState(5);
 
   // useEffect(() => {
@@ -86,11 +87,45 @@ const Download: React.FC = () => {
   //   };
   // }, [platform]);
 
+  const platform = getMobileOS();
+  const { checkForUpdate, versionInfo, loading } = useAppVersionStore();
+
+  useEffect(() => {
+    if (!platform) return;
+
+    checkForUpdate(platform);
+  }, [checkForUpdate, platform]);
+
   const handleDownload = () => {
-    window.location.href = platform === "ios" ? APP_STORE_URL : GOOGLE_PLAY_URL;
+    if (!versionInfo?.store_url) {
+      console.warn("Store URL is missing");
+      return;
+    }
+
+    window.location.href = versionInfo.store_url;
+  };
+
+  const handleAlternateDownload = async () => {
+    if (!platform) return;
+
+    try {
+      const oppositePlatform = getOppositePlatform(platform);
+
+      const data = await versionService.checkVersion(oppositePlatform);
+
+      if (!data.store_url) {
+        console.warn("Alternate store URL is missing");
+        return;
+      }
+
+      window.open(data.store_url, "_blank");
+    } catch (err) {
+      console.error("Failed to load alternate version", err);
+    }
   };
 
   const isIOS = platform === "ios";
+  const isDisabled = !versionInfo?.store_url || loading;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-gray-50 to-gray-100 p-4">
@@ -171,7 +206,14 @@ const Download: React.FC = () => {
           whileHover="hover"
           whileTap="tap"
           onClick={handleDownload}
-          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-xl transition-colors duration-200 mb-4 flex items-center justify-center gap-2 relative overflow-hidden"
+          className={`
+          w-full py-3 px-4 rounded-xl font-medium mb-4 flex items-center justify-center gap-2
+          ${
+            isDisabled
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-gray-900 hover:bg-gray-800 text-white transition-colors duration-200   relative overflow-hidden"
+          }
+        `}
         >
           <motion.div
             className="absolute inset-0 bg-white"
@@ -199,9 +241,8 @@ const Download: React.FC = () => {
         {/* Альтернативная ссылка */}
         <motion.div variants={itemVariants} className="text-center">
           <p className="text-gray-400 text-xs mb-2">Другая платформа?</p>
-          <motion.a
-            href={isIOS ? GOOGLE_PLAY_URL : APP_STORE_URL}
-            target="_blank"
+          <motion.button
+            onClick={handleAlternateDownload}
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200"
             whileHover={{ x: 3 }}
@@ -218,7 +259,7 @@ const Download: React.FC = () => {
                 <span>Скачать для iOS</span>
               </>
             )}
-          </motion.a>
+          </motion.button>
         </motion.div>
 
         {/* Нижняя информация */}
